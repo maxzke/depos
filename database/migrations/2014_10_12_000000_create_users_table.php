@@ -16,8 +16,8 @@ class CreateUsersTable extends Migration
         Schema::create('users', function (Blueprint $table) {
             $table->id();
 
-            $table->foreignId('sucursale_id');
-            $table->foreign('sucursale_id')->references('id')->on('sucursales');
+            // $table->foreignId('sucursale_id');
+            // $table->foreign('sucursale_id')->references('id')->on('sucursales');
             
             $table->string('name');
             $table->string('email')->unique();
