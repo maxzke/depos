@@ -5,9 +5,15 @@
         <div class="col-md-3">
             <livewire:sucursales/>
         </div>
-        <div class="col-md-4"></div>
-        <div class="col-md-4"></div>
-        <div class="col-md-4"></div>
+        <div class="col-md-3">
+            <livewire:roles-component/>
+        </div>
+        <div class="col-md-3">
+            <livewire:etapas-component/>
+        </div>
+        <div class="col-md-3">
+            <livewire:metodos-component/>
+        </div>
     </div>
 @endsection
     

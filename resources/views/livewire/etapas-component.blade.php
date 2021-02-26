@@ -1,6 +1,6 @@
 <div>
     <div class="card">
-        <div class="card-header bg-dark">Sucursales</div>
+        <div class="card-header bg-dark">Etapas de proceso</div>
         <div class="card-body bg-dark">
             <form class="form-inline" wire:submit.prevent="store">
                 <div class="form-group">
@@ -22,10 +22,4 @@
 
         </div>
       </div>
-
-
-
-
-
-
 </div>

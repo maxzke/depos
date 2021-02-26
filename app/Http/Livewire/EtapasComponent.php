@@ -4,12 +4,14 @@ namespace App\Http\Livewire;
 
 use Livewire\Component;
 
-class Sucursales extends Component{
+class EtapasComponent extends Component
+{
 
     public $nombre;
-
-    public function render(){
-        return view('livewire.sucursales');
+    
+    public function render()
+    {
+        return view('livewire.etapas-component');
     }
 
     public function store(){

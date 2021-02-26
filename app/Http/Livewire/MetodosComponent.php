@@ -4,12 +4,14 @@ namespace App\Http\Livewire;
 
 use Livewire\Component;
 
-class Sucursales extends Component{
+class MetodosComponent extends Component
+{
 
     public $nombre;
-
-    public function render(){
-        return view('livewire.sucursales');
+    
+    public function render()
+    {
+        return view('livewire.metodos-component');
     }
 
     public function store(){
@@ -30,4 +32,5 @@ class Sucursales extends Component{
     protected $messages = [
         'nombre.required' => 'Debes ingresar un nombre'
     ];
+
 }

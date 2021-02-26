@@ -49,7 +49,7 @@
             </li>
           </ul>
             <ul class="navbar-nav ml-auto">
-                <li class="nav-item dropdown">
+                <li class="nav-item dropleft">
                     <a class="nav-link dropdown-toggle" 
                     data-toggle="dropdown" 
                     href="#" role="button" 
@@ -64,6 +64,12 @@
       </nav>
       <div class="container-fluid">
         @yield('content')
+        <button type="button" class="btn btn-sm btn-outline-primary">Primary</button>
+<button type="button" class="btn btn-sm btn-outline-secondary">Secondary</button>
+<button type="button" class="btn btn-sm btn-outline-success">Success</button>
+<button type="button" class="btn btn-sm btn-outline-info">Info</button>
+<button type="button" class="btn btn-sm btn-outline-warning">Warning</button>
+<button type="button" class="btn btn-sm btn-outline-danger">Danger</button>
       </div>
     
     <script src="{{ asset('js/app.js') }}" defer></script>
