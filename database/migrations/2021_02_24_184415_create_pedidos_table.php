@@ -16,7 +16,7 @@ class CreatePedidosTable extends Migration
         Schema::create('pedidos', function (Blueprint $table) {
             $table->id();
 
-            $table->foreignId('detalle_id');
+            $table->foreignId('detalle_id')->inique();
             $table->foreign('detalle_id')->references('id')->on('detalles');
             
             $table->string('url_img_propuesta')->nullable();
