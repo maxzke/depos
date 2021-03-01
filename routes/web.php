@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\SucursaleController;
+use App\Http\Controllers\TpvController;
 
 /*
 |--------------------------------------------------------------------------
@@ -23,3 +24,4 @@ Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
 })->name('dashboard');
 
 Route::get('sucursales',[SucursaleController::class,'index']);
+Route::get('terminal',[TpvController::class,'index']);

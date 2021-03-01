@@ -1,11 +1,43 @@
-/* @import url(https://fonts.googleapis.com/css?family=Nunito); */
-/* @charset "UTF-8"; */
+/* @import url(https://fonts.googleapis.com/css?family=Nunito);
+@charset "UTF-8"; */
 /*!
  * Bootstrap v4.6.0 (https://getbootstrap.com/)
  * Copyright 2011-2021 The Bootstrap Authors
  * Copyright 2011-2021 Twitter, Inc.
  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
  */
+
+ .categorias-productos{
+  height: 400px;
+  overflow-y: scroll;
+  width: 100%;
+ }
+.pie{
+  background-color: #282828;
+}
+ .cliente{
+   background-color: #202020;
+ }
+ .table-fixed thead {
+  width: 97%;
+}
+.table-fixed tbody {
+  height: 310px;
+  overflow-y: auto;
+  width: 100%;
+}
+.table-fixed thead, .table-fixed tbody, .table-fixed tr, .table-fixed td, .table-fixed th {
+  display: block;
+}
+.table-fixed tbody td, .table-fixed thead > tr> th {
+  float: left;
+  /* border-bottom-width: 0; */
+}
+.table-fixed tbody td{
+  border-bottom-width: 1px;
+  border-color: #2c3036;
+}
+
 :root {
   --blue: #007bff;
   --indigo: #6610f2;
@@ -62,7 +94,7 @@ body {
   line-height: 1.5;
   color: #aaa;
   text-align: left;
-  background-color: #181818;
+  background-color: #171717;
 }
 
 [tabindex="-1"]:focus:not(:focus-visible) {

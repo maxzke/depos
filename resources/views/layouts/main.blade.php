@@ -7,7 +7,8 @@
 
     <!-- Bootstrap CSS -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.2/css/all.css" integrity="sha384-vSIIfh2YWi9wW0r9iZe7RJPrKwp6bG+s9QZMoITbCckVJqGCCRhc+ccxNcdpHuYu" crossorigin="anonymous">
     <title>DigitalEstudio</title>
     @livewireStyles
   </head>
@@ -64,12 +65,6 @@
       </nav>
       <div class="container-fluid">
         @yield('content')
-        <button type="button" class="btn btn-sm btn-outline-primary">Primary</button>
-<button type="button" class="btn btn-sm btn-outline-secondary">Secondary</button>
-<button type="button" class="btn btn-sm btn-outline-success">Success</button>
-<button type="button" class="btn btn-sm btn-outline-info">Info</button>
-<button type="button" class="btn btn-sm btn-outline-warning">Warning</button>
-<button type="button" class="btn btn-sm btn-outline-danger">Danger</button>
       </div>
     
     <script src="{{ asset('js/app.js') }}" defer></script>
