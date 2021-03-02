@@ -4,10 +4,10 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-class SucursaleController extends Controller{
+class ConfiguracionController extends Controller{
 
     public function index(){
-        
+        return view('configurar');
     }
     
 }

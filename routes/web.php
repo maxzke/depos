@@ -1,7 +1,7 @@
 <?php
 
+use App\Http\Controllers\ConfiguracionController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\SucursaleController;
 use App\Http\Controllers\TpvController;
 
 /*
@@ -23,5 +23,5 @@ Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
     return view('dashboard');
 })->name('dashboard');
 
-Route::get('sucursales',[SucursaleController::class,'index']);
+Route::get('configuracion',[ConfiguracionController::class,'index']);
 Route::get('terminal',[TpvController::class,'index']);

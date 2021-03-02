@@ -40,7 +40,7 @@
               <a class="nav-link" href="#">Corte</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#">Configuracion</a>
+                <a class="nav-link" href="{{ url('configuracion') }}">Configuracion</a>
             </li>
             <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Dropdown</a>
