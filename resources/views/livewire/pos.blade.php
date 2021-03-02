@@ -41,7 +41,7 @@
                     <th class="col-sm-1">Cant</th>
                     <th class="col-sm-1">Precio</th>
                     <th class="col-sm-1">Importe</th>
-                    <th class="col-sm-1"></th>
+                    <th class="col-sm-1 text-center"><i class="fas fa-box-open"></i></th>
                   </tr>
                 </thead>
                 <tbody class="text-muted">
@@ -61,8 +61,8 @@
                         <td class="col-sm-1">493.0</td>
                         <td class="col-sm-1">3,259.0</td>
                         <td class="col-sm-1">
-                            <i class="fas fa-plus-circle mr-1"></i>
-                            <i class="fas fa-minus-circle mr-3"></i>
+                            <a href="#"><i class="fas fa-plus-circle mr-1"></i></a>
+                            <a href="#"><i class="fas fa-minus-circle mr-3"></i></a>
                         </td>
                     </tr>
                     <tr>                      
@@ -71,8 +71,8 @@
                         <td class="col-sm-1">493.0</td>
                         <td class="col-sm-1">3,259.0</td>
                         <td class="col-sm-1">
-                            <i class="fas fa-plus-circle mr-1"></i>
-                            <i class="fas fa-minus-circle mr-3"></i>
+                            <a href="#"><i class="fas fa-plus-circle mr-1"></i></a>
+                            <a href="#"><i class="fas fa-minus-circle mr-3"></i></a>
                         </td>
                     </tr>
                     <tr>                      
@@ -81,8 +81,8 @@
                         <td class="col-sm-1">493.0</td>
                         <td class="col-sm-1">3,259.0</td>
                         <td class="col-sm-1">
-                            <i class="fas fa-plus-circle mr-1"></i>
-                            <i class="fas fa-minus-circle mr-3"></i>
+                            <a href="#"><i class="fas fa-plus-circle mr-1"></i></a>
+                            <a href="#"><i class="fas fa-minus-circle mr-3"></i></a>
                         </td>
                     </tr>
                     <tr>                      
@@ -91,8 +91,8 @@
                         <td class="col-sm-1">493.0</td>
                         <td class="col-sm-1">3,259.0</td>
                         <td class="col-sm-1">
-                            <i class="fas fa-plus-circle mr-1"></i>
-                            <i class="fas fa-minus-circle mr-3"></i>
+                            <a href="#"><i class="fas fa-plus-circle mr-1"></i></a>
+                            <a href="#"><i class="fas fa-minus-circle mr-3"></i></a>
                         </td>
                     </tr>
                     <tr>                      
@@ -101,8 +101,8 @@
                         <td class="col-sm-1">493.0</td>
                         <td class="col-sm-1">3,259.0</td>
                         <td class="col-sm-1">
-                            <i class="fas fa-plus-circle mr-1"></i>
-                            <i class="fas fa-minus-circle mr-3"></i>
+                            <a href="#"><i class="fas fa-plus-circle mr-1"></i></a>
+                            <a href="#"><i class="fas fa-minus-circle mr-3"></i></a>
                         </td>
                     </tr>
                     <tr>                      
@@ -111,8 +111,8 @@
                         <td class="col-sm-1">493.0</td>
                         <td class="col-sm-1">3,259.0</td>
                         <td class="col-sm-1">
-                            <i class="fas fa-plus-circle mr-1"></i>
-                            <i class="fas fa-minus-circle mr-3"></i>
+                            <a href="#"><i class="fas fa-plus-circle mr-1"></i></a>
+                            <a href="#"><i class="fas fa-minus-circle mr-3"></i></a>
                         </td>
                     </tr>
                     <tr>                      
@@ -121,8 +121,8 @@
                         <td class="col-sm-1">493.0</td>
                         <td class="col-sm-1">3,259.0</td>
                         <td class="col-sm-1">
-                            <i class="fas fa-plus-circle mr-1"></i>
-                            <i class="fas fa-minus-circle mr-3"></i>
+                            <a href="#"><i class="fas fa-plus-circle mr-1"></i></a>
+                            <a href="#"><i class="fas fa-minus-circle mr-3"></i></a>
                         </td>
                     </tr>
                     <tr>                      
@@ -131,8 +131,8 @@
                         <td class="col-sm-1">493.0</td>
                         <td class="col-sm-1">3,259.0</td>
                         <td class="col-sm-1">
-                            <i class="fas fa-plus-circle mr-1"></i>
-                            <i class="fas fa-minus-circle mr-3"></i>
+                            <a href="#"><i class="fas fa-plus-circle mr-1"></i></a>
+                            <a href="#"><i class="fas fa-minus-circle mr-3"></i></a>
                         </td>
                     </tr>
                     <tr>                      
@@ -141,19 +141,28 @@
                         <td class="col-sm-1">493.0</td>
                         <td class="col-sm-1">3,259.0</td>
                         <td class="col-sm-1">
-                            <i class="fas fa-plus-circle mr-1"></i>
-                            <i class="fas fa-minus-circle mr-3"></i>
+                            <a href="#"><i class="fas fa-plus-circle mr-1"></i></a>
+                            <a href="#"><i class="fas fa-minus-circle mr-3"></i></a>
                         </td>
                     </tr>
                 </tbody>
               </table>
               <div class="row">
-                  <div class="col-md-9 text-right"><strong>Subtotal</strong></div>
-                  <div class="col-md-3"><span class="text-muted"><strong>2,3698</strong></span></div>
-                  <div class="col-md-9 text-right"><strong>Iva</strong></div>
-                  <div class="col-md-3"><span class="text-muted"><strong>2,3698</strong></span></div>
-                  <div class="col-md-9 text-right"><strong>Total</strong></div>
-                  <div class="col-md-3"><span class="text-muted"><strong>2,3698</strong></span></div>
+                  <div class="col-md-8 bg-info">
+                      espacio
+                  </div>
+                  <div class="col-md-4">
+                      <div class="row">
+                        <div class="col-md-4 text-right"><strong>Subtotal</strong></div>
+                        <div class="col-md-4"><span class="text-muted"><strong>$ 2,3698</strong></span></div>
+                        <div class="col-md-4"><input type="text" class="form-control form-control-sm" name="importe_recibido" placeholder="Importe"/></div>     
+                        <div class="col-md-4 text-right"><strong>Iva</strong></div>
+                        <div class="col-md-8"><span class="text-muted"><strong>$ 2,3698</strong></span></div>
+                        <div class="col-md-4 text-right"><strong>Total</strong></div>
+                        <div class="col-md-4"><span class="text-muted"><strong>$ 2,3698</strong></span></div>                            
+                        <div class="col-md-4"><button class="btn btn-sm btn-outline-success btn-block">Cobrar</button></div>                            
+                      </div>                    
+                  </div>
               </div>
         </div>
         <!-- Categorias de Productos -->
@@ -161,6 +170,8 @@
             <div class="categorias-productos mt-3">
                 <div class="list-group bg-dark">
                     <a href="#" class="list-group-item list-group-item-action">Lonas</a>
+                    <a href="#" class="list-group-item list-group-item-action">Serigrafia</a>
+                    <a href="#" class="list-group-item list-group-item-action">Sublimación</a>
                     <a href="#" class="list-group-item list-group-item-action">Viniles</a>
                     <a href="#" class="list-group-item list-group-item-action">Morbi leo risus</a>
                     <a href="#" class="list-group-item list-group-item-action">Porta ac consectetur ac</a>
