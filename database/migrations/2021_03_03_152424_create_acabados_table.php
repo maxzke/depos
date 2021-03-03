@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateLonastramosTable extends Migration
+class CreateAcabadosTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,11 @@ class CreateLonastramosTable extends Migration
      */
     public function up()
     {
-        Schema::create('lonastramos', function (Blueprint $table) {
+        Schema::create('acabados', function (Blueprint $table) {
             $table->id();
-            $table->decimal('medida',9,1);
+            $table->string('nombre');
+            $table->decimal('aumentox',9,1);
+            $table->decimal('aumentoy',9,1);
             $table->timestamps();
         });
     }
@@ -27,6 +29,6 @@ class CreateLonastramosTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('lonastramos');
+        Schema::dropIfExists('acabados');
     }
 }

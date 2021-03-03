@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateLonaAcabadosTable extends Migration
+class CreateLonaTramoTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,14 @@ class CreateLonaAcabadosTable extends Migration
      */
     public function up()
     {
-        Schema::create('lona_acabados', function (Blueprint $table) {
+        Schema::create('lona_tramo', function (Blueprint $table) {
             $table->id();
+            
             $table->foreignId('lona_id');
             $table->foreign('lona_id')->references('id')->on('lonas');
-            $table->foreignId('lonasacabado_id');
-            $table->foreign('lonasacabado_id')->references('id')->on('lonasacabados');
+            $table->foreignId('tramo_id');
+            $table->foreign('tramo_id')->references('id')->on('tramos');
+
             $table->timestamps();
         });
     }
@@ -30,6 +32,6 @@ class CreateLonaAcabadosTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('lona_acabados');
+        Schema::dropIfExists('lona_tramo');
     }
 }
