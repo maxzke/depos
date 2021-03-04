@@ -8,4 +8,5 @@ use Illuminate\Database\Eloquent\Model;
 class Lona extends Model
 {
     use HasFactory;
+    protected $fillable = ['nombre','calidad_360','calidad_720','calidad_1024','calidad_fullhd'];
 }

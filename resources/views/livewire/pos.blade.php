@@ -45,6 +45,20 @@
                   </tr>
                 </thead>
                 <tbody class="text-muted">
+                <?php 
+                    foreach($productos as $producto):?>                         
+                         <tr>                      
+                        <td class="col-sm-8"><?php echo $producto['nombre']; ?></td>
+                        <td class="col-sm-1"><?php echo $producto['cantidad']; ?></td>
+                        <td class="col-sm-1"><?php echo $producto['precio']; ?></td>
+                        <td class="col-sm-1"><?php echo $producto['importe']; ?></td>
+                        <td class="col-sm-1">
+                            <a href="#"><i class="fas fa-plus-circle mr-1"></i></a>
+                            <a href="#"><i class="fas fa-minus-circle mr-3"></i></a>
+                        </td>
+                    </tr>
+                    <?php endforeach;
+                    ?>
                     <tr>                      
                         <td class="col-sm-8">Lona front calidad Lona front calidad 1080 DPI 1080 DPI 3x7 jareta superior Lona front calidad 1080 DPI</td>
                         <td class="col-sm-1">7</td>
@@ -168,35 +182,39 @@
         <!-- Categorias de Productos -->
         <div class="col-md-2">
             <div class="categorias-productos mt-1">
-                {{-- <div class="list-group bg-dark">
+                <!-- <div class="list-group bg-dark">
                     <a href="#" class="list-group-item list-group-item-action">Lonas</a>
                     <a href="#" class="list-group-item list-group-item-action">Serigrafia</a>
                     <a href="#" class="list-group-item list-group-item-action">Sublimación</a>
                     <a href="#" class="list-group-item list-group-item-action">Viniles</a>
-                </div> --}}
+                    <a href="#" class="list-group-item list-group-item-action">Personalizado</a>
+                </div> -->
                 <ul class="nav flex-column">
                     <li class="nav-item">
-                      <a class="nav-link" data-toggle="tab" href="#tab-lona">Lonas</a>
+                      <a class="nav-link {{ $tab == 'lonas' ? 'active' : '' }}" wire:click="$set('tab', 'lonas')" data-toggle="tab" href="#tab-lona">Lonas</a>
                     </li>
                     <li class="nav-item">
-                      <a class="nav-link" data-toggle="tab" href="#tab-serigrafia">Serigrafia</a>
+                      <a class="nav-link {{ $tab == 'serigrafia' ? 'active' : '' }}" wire:click="$set('tab', 'serigrafia')" data-toggle="tab" href="#tab-serigrafia">Serigrafia</a>
                     </li>
                     <li class="nav-item">
-                      <a class="nav-link" data-toggle="tab" href="#tab-sublimacion">Sublimación</a>
+                      <a class="nav-link {{ $tab == 'sublimacion' ? 'active' : '' }}" wire:click="$set('tab', 'sublimacion')" data-toggle="tab" href="#tab-sublimacion">Sublimación</a>
                     </li>
                     <li class="nav-item">
-                      <a class="nav-link" data-toggle="tab" href="#tab-viniles">Viniles</a>
+                      <a class="nav-link {{ $tab == 'viniles' ? 'active' : '' }}" wire:click="$set('tab', 'viniles')" data-toggle="tab" href="#tab-viniles">Viniles</a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link {{ $tab == 'personalizado' ? 'active' : '' }}" wire:click="$set('tab', 'personalizado')" data-toggle="tab" href="#tab-personalizado">Personalizado</a>
                     </li>
                   </ul>
             </div>
         </div>
     </div>
-    <div class="row pie mt-1">
+    <div class="row pie">
         <div class="col-md-12">
             <div id="myTabContent" class="tab-content">
                 {{-- COLUMNA-LONA --}}
-                <div class="tab-pane fade" id="tab-lona">
-                  <div class="row">
+                <div class="tab-pane fade {{ $tab == 'lonas' ? 'active show' : '' }}" id="tab-lona">
+                  <div class="row mt-2">
                       <div class="col-md-2"></div>
                       <div class="col-md-4">
                             <div class=" row">
@@ -249,7 +267,7 @@
                                 </div>
                             </div>
                       </div> 
-                      <div class="col-md-4">
+                      <div class="col-md-4 mb-1">
                         <span class="text-muted"><strong>Precio</strong></span>
                         <br>
                         <span class="text-muted">$ 1,250.5</span>
@@ -262,16 +280,40 @@
                       </div>
                   </div>
                 </div>{{-- COLUMNA-LONA --}}                
-                <div class="tab-pane fade" id="tab-serigrafia">
+                <div class="tab-pane fade {{ $tab == 'serigrafia' ? 'active show' : '' }}" id="tab-serigrafia">
                   <p>Food truck fixie locavore, accusamus mcsweeney's marfa nulla single-origin coffee squid. Exercitation +1 labore velit, blog sartorial PBR leggings next level wes anderson artisan four loko farm-to-table craft beer twee. Qui photo booth letterpress, commodo enim craft beer mlkshk aliquip jean shorts ullamco ad vinyl cillum PBR. Homo nostrud organic, assumenda labore aesthetic magna delectus mollit.</p>
                 </div>
-                <div class="tab-pane fade" id="tab-sublimacion">
+                <div class="tab-pane fade {{ $tab == 'sublimacion' ? 'active show' : '' }}" id="tab-sublimacion">
                   <p>Etsy mixtape wayfarers, ethical wes anderson tofu before they sold out mcsweeney's organic lomo retro fanny pack lo-fi farm-to-table readymade. Messenger bag gentrify pitchfork tattooed craft beer, iphone skateboard locavore carles etsy salvia banksy hoodie helvetica. DIY synth PBR banksy irony. Leggings gentrify squid 8-bit cred pitchfork.</p>
                 </div>
-                <div class="tab-pane fade" id="tab-viniles">
-                  {{ $users }}
+                <div class="tab-pane fade {{ $tab == 'viniles' ? 'active show' : '' }}" id="tab-viniles">
+                    @if($users != null)
+                        {{ $users }}
+                    @endif
                   <hr>
-                  {{ $roles }}
+                  @if($roles != null)
+                    {{ $roles }}
+                  @endif
+                </div>
+                <div class="tab-pane fade {{ $tab == 'personalizado' ? 'active show' : '' }}" id="tab-personalizado">
+                    <div class="row mt-2 mb-2">
+                      <div class="col-md-2"></div>
+                      <div class="col-md-4">
+                        <input type="text" wire:model="nombre" class="form-control form-control-sm" placeholder="Producto">                                
+                      </div> 
+                      <div class="col-md-1">
+                        <input type="text" wire:model="cantidad" class="form-control form-control-sm" placeholder="Cantidad">                                
+                      </div> 
+                      <div class="col-md-1">
+                        <input type="text" wire:model="precio" class="form-control form-control-sm" placeholder="Precio">                                
+                      </div> 
+                      <div class="col-md-1">
+                        <input type="text" wire:model="importe" class="form-control form-control-sm" placeholder="Importe" disabled>                                
+                      </div> 
+                      <div class="col-4 col-sm-3 col-md-2">
+                        <button class="btn btn-sm btn-outline-info" wire:click="addtocart()"><i class="fas fa-shopping-cart"></i> Agregar</button>
+                      </div>
+                  </div>
                 </div>
               </div>            
         </div>
