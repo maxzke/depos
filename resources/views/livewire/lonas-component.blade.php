@@ -2,14 +2,23 @@
     <div class="card">
         <div class="card-header bg-dark">Lonas</div>
         <div class="card-body bg-dark">
-          <form class="form-inline" wire:submit.prevent="{{ $editar ? 'update' : 'store' }}">
-            {{-- <div class="form-group"> --}}
+          <form wire:submit.prevent="{{ $editar ? 'update' : 'store' }}"> 
+            <div class="form-row">
               <input type="text" class="col-sm-5 form-control form-control-sm" wire:model="nombre" placeholder="Nombre">
               <input type="text" class="col-sm-1 form-control form-control-sm ml-1" wire:model="calidad_360" placeholder="$ calidad 360">
               <input type="text" class="col-sm-1 form-control form-control-sm ml-1" wire:model="calidad_720" placeholder="$ calidad 720">
               <input type="text" class="col-sm-1 form-control form-control-sm ml-1" wire:model="calidad_1024" placeholder="$ calidad 1024">
-              <input type="text" class="col-sm-1 form-control form-control-sm ml-1" wire:model="calidad_fullhd" placeholder="$ calidad fullhd">
-            {{-- </div> --}}
+              <input type="text" class="col-sm-1 form-control form-control-sm ml-1" wire:model="calidad_fullhd" placeholder="$ calidad fullhd">              
+            </div>           
+            <div class="form-row">
+              <span class="mr-3"><strong>TRAMOS:{{ var_dump($array_tramos) }} </strong></span>
+              @foreach($tramos as $tramo)
+                <div class="custom-control custom-checkbox mr-4">                  
+                  <input type="checkbox" wire:model="check_tramos.{{$tramo->id}}" class="custom-control-input" value="{{ $tramo->id }}" name="tramos[]" id="customCheck{{ $tramo->id}}">
+                  <label class="custom-control-label" for="customCheck{{ $tramo->id }}">{{ $tramo->medida }}</label>                   
+                </div>
+              @endforeach
+            </div>              
             <button type="submit" class="btn btn-sm btn-outline-success ml-1">{{ $text_boton}} </button>
         </form>
           <br>

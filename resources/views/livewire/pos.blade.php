@@ -189,7 +189,7 @@
                     <a href="#" class="list-group-item list-group-item-action">Viniles</a>
                     <a href="#" class="list-group-item list-group-item-action">Personalizado</a>
                 </div> -->
-                <ul class="nav flex-column">
+                <ul class="nav nav-tabs flex-column">
                     <li class="nav-item">
                       <a class="nav-link {{ $tab == 'lonas' ? 'active' : '' }}" wire:click="$set('tab', 'lonas')" data-toggle="tab" href="#tab-lona">Lonas</a>
                     </li>

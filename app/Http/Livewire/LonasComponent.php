@@ -4,28 +4,43 @@ namespace App\Http\Livewire;
 
 use Livewire\Component;
 use App\Models\Lona;
+use App\Models\Tramo;
+use App\Models\Acabado;
+
 class LonasComponent extends Component
 {
     public $nombre,$calidad_360,$calidad_720,$calidad_1024,$calidad_fullhd,$lona_id;
     public $text_boton = "Guardar";
     public $editar = FALSE;
-
-    public function render()
-    {
+    public $check_tramos = [];
+    public function render(){
         $data['lonas'] = Lona::latest('id')->get();
+        $data['tramos'] = Tramo::latest('id')->get();
+        $data['acabados'] = Acabado::latest('id')->get();
+        $data['array_tramos'] = $this->check_tramos;
         return view('livewire.lonas-component',$data);
     }
 
     public function store(){
         $validatedData = $this->validate();
-        Lona::create([
+        $lona = Lona::create([
             'nombre' => $this->nombre,
             'calidad_360' => $this->calidad_360,
             'calidad_720' => $this->calidad_720,
             'calidad_1024' => $this->calidad_1024,
             'calidad_fullhd' => $this->calidad_fullhd,
         ]);
+        $lona->id;
+        foreach ($this->check_tramos as $key => $value) {
+            if($this->check_tramos){
+                $lona->tramos()->attach($value);
+            }
+        }
         $this->reset(['nombre']);
+    }
+
+    public function check(Tramo $t){
+        $this->check_tramos = $t;
     }
 
     public function edit(Lona $rol){
