@@ -11,7 +11,7 @@ class Tramo extends Model
     use HasFactory;
     protected $fillable = ['medida'];
 
-    public function tramos(){
+    public function lonas(){
         return $this->belongsToMany(Lona::class);
     }
 }

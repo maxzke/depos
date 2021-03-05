@@ -11,13 +11,19 @@
               <input type="text" class="col-sm-1 form-control form-control-sm ml-1" wire:model="calidad_fullhd" placeholder="$ calidad fullhd">              
             </div>           
             <div class="form-row">
-              <span class="mr-3"><strong>TRAMOS:{{ var_dump($array_tramos) }} </strong></span>
+              <span class="mr-3"><strong>TRAMOS: {{$pertenece }} </strong></span>
+              <h6>ztramo: {{ implode(', ',$check_tramos)}} </h6>
+              <select wire:model="check_tramos" class="bg-dark text-white" multiple>
               @foreach($tramos as $tramo)
+                <option value="{{ $tramo->id }}">{{ $tramo->medida }}</option>
+              @endforeach
+              </select>
+              <!-- @foreach($tramos as $tramo)
                 <div class="custom-control custom-checkbox mr-4">                  
-                  <input type="checkbox" wire:model="check_tramos.{{$tramo->id}}" class="custom-control-input" value="{{ $tramo->id }}" name="tramos[]" id="customCheck{{ $tramo->id}}">
+                  <input type="checkbox" wire:model="check_tramos" class="custom-control-input" value="{{ $tramo->id }}" id="customCheck{{ $tramo->id}}">
                   <label class="custom-control-label" for="customCheck{{ $tramo->id }}">{{ $tramo->medida }}</label>                   
                 </div>
-              @endforeach
+              @endforeach -->
             </div>              
             <button type="submit" class="btn btn-sm btn-outline-success ml-1">{{ $text_boton}} </button>
         </form>
@@ -27,6 +33,7 @@
           @error('calidad_720') <span class="text-danger"><small>{{ $message }}</small></span> @enderror
           @error('calidad_1024') <span class="text-danger"><small>{{ $message }}</small></span> @enderror
           @error('calidad_fullhd') <span class="text-danger"><small>{{ $message }}</small></span> @enderror          
+          @error('check_tramos') <span class="text-danger"><small>{{ $message }}</small></span> @enderror 
           <table class="table table-sm table-hover">
             <tbody>
               @foreach ($lonas as $lona)

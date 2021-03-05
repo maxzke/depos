@@ -18,7 +18,7 @@ class Pos extends Component{
         $user = User::find(1);
         $data['users'] = $user->roles;
 
-        $role = Role::find(1);
+        $role = Role::find(3);
         $data['roles'] = $role->users;
         $data['productos'] = $this->cart;
         return view('livewire.pos',$data);
