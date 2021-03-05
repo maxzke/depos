@@ -50,8 +50,8 @@
                          <tr>                      
                         <td class="col-sm-8"><?php echo $producto['nombre']; ?></td>
                         <td class="col-sm-1"><?php echo $producto['cantidad']; ?></td>
-                        <td class="col-sm-1"><?php echo $producto['precio']; ?></td>
-                        <td class="col-sm-1"><?php echo $producto['importe']; ?></td>
+                        <td class="col-sm-1"><?php echo number_format($producto['precio'],1,".","," ); ?></td>
+                        <td class="col-sm-1"><?php echo number_format($producto['importe'],1,".","," ); ?></td>
                         <td class="col-sm-1">
                             <a href="#" wire:click="producto_increment('{{$producto['id']}}')"><i class="fas fa-plus-circle mr-1"></i></a>
                             <a href="#" wire:click="producto_decrement('{{$producto['id']}}')"><i class="fas fa-minus-circle mr-3"></i></a>
@@ -69,12 +69,22 @@
                       <div class="row">
                         <div class="col-md-4 text-right"><strong>Subtotal</strong></div>
                         <div class="col-md-4"><span class="text-muted"><strong>$ 2,3698</strong></span></div>
-                        <div class="col-md-4"><input type="text" class="form-control form-control-sm" name="importe_recibido" placeholder="$ Abono"/></div>     
+                        <div class="col-md-4">
+                          <input type="number" 
+                          wire:model.debounce.lazy="abono" 
+                          class="form-control form-control-sm" 
+                          name="importe_recibido" 
+                          onclick="this.select()"
+                          placeholder="$"/>
+                        </div>     
                         <div class="col-md-4 text-right"><strong>Iva</strong></div>
                         <div class="col-md-8"><span class="text-muted"><strong>$ 2,3698</strong></span></div>
                         <div class="col-md-4 text-right"><strong>Total</strong></div>
                         <div class="col-md-4"><span class="text-muted"><strong>$ 2,3698</strong></span></div>                            
-                        <div class="col-md-4"><button class="btn btn-sm btn-outline-success btn-block mb-1">Cobrar</button></div>                            
+                        <div class="col-md-4">
+                          <button class="btn btn-sm btn-outline-success btn-block mb-1"
+                          {{ $abono>0 == '' ? 'disabled' : '' }}>Cobrar</button>
+                        </div>                            
                       </div>                    
                   </div>
               </div>
@@ -226,7 +236,7 @@
                         <input type="number" wire:model="precio" min="1" onclick="this.select()" class="form-control form-control-sm" placeholder="$">                                
                       </div> 
                       <div class="col-md-1">
-                        <span>$ {{ $importe}} </span>
+                        <span>$ {{ number_format($importe,1,".","," ) }} </span>
                       </div> 
                       <div class="col-4 col-sm-3 col-md-2">
                         <button class="btn btn-sm btn-outline-info" wire:click="addtocart()"><i class="fas fa-shopping-cart"></i> Agregar</button>

@@ -10,7 +10,7 @@ use Illuminate\Support\Str;
 class Pos extends Component{
 
     public $cart = [];
-    public $idp,$nombre,$precio,$importe,$cantidad,$clave,$valor;
+    public $idp,$nombre,$precio,$importe,$cantidad,$abono;
     
     public $tab="";
 
@@ -43,8 +43,7 @@ class Pos extends Component{
             if ($v['id'] == $id) {
                 $v['cantidad'] = intval($v['cantidad'])+1 ;
                 $this->cart[$key]['cantidad'] = intval($this->cart[$key]['cantidad']) +1;
-                $this->cart[$key]['importe'] = intval($this->cart[$key]['cantidad']) * intval($this->cart[$key]['precio']);
-                
+                $this->cart[$key]['importe'] = intval($this->cart[$key]['cantidad']) * intval($this->cart[$key]['precio']);                
             }
         } 
     }
