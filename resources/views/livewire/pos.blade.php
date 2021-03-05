@@ -53,112 +53,12 @@
                         <td class="col-sm-1"><?php echo $producto['precio']; ?></td>
                         <td class="col-sm-1"><?php echo $producto['importe']; ?></td>
                         <td class="col-sm-1">
-                            <a href="#"><i class="fas fa-plus-circle mr-1"></i></a>
-                            <a href="#"><i class="fas fa-minus-circle mr-3"></i></a>
+                            <a href="#" wire:click="producto_increment('{{$producto['id']}}')"><i class="fas fa-plus-circle mr-1"></i></a>
+                            <a href="#" wire:click="producto_decrement('{{$producto['id']}}')"><i class="fas fa-minus-circle mr-3"></i></a>
                         </td>
                     </tr>
-                    <?php endforeach;
+                    <?php endforeach;   
                     ?>
-                    <tr>                      
-                        <td class="col-sm-8">Lona front calidad Lona front calidad 1080 DPI 1080 DPI 3x7 jareta superior Lona front calidad 1080 DPI</td>
-                        <td class="col-sm-1">7</td>
-                        <td class="col-sm-1">493.0</td>
-                        <td class="col-sm-1">3,259.0</td>
-                        <td class="col-sm-1">
-                            <a href="#"><i class="fas fa-plus-circle mr-1"></i></a>
-                            <a href="#"><i class="fas fa-minus-circle mr-3"></i></a>
-                        </td>
-                    </tr>
-                    <tr>                      
-                        <td class="col-sm-8">Lona front calidad 1080 DPI 3x7 jareta superior</td>
-                        <td class="col-sm-1">7</td>
-                        <td class="col-sm-1">493.0</td>
-                        <td class="col-sm-1">3,259.0</td>
-                        <td class="col-sm-1">
-                            <a href="#"><i class="fas fa-plus-circle mr-1"></i></a>
-                            <a href="#"><i class="fas fa-minus-circle mr-3"></i></a>
-                        </td>
-                    </tr>
-                    <tr>                      
-                        <td class="col-sm-8">Lona front calidad 1080 DPI 3x7 jareta superior</td>
-                        <td class="col-sm-1">7</td>
-                        <td class="col-sm-1">493.0</td>
-                        <td class="col-sm-1">3,259.0</td>
-                        <td class="col-sm-1">
-                            <a href="#"><i class="fas fa-plus-circle mr-1"></i></a>
-                            <a href="#"><i class="fas fa-minus-circle mr-3"></i></a>
-                        </td>
-                    </tr>
-                    <tr>                      
-                        <td class="col-sm-8">Lona front calidad 1080 DPI 3x7 jareta superior</td>
-                        <td class="col-sm-1">7</td>
-                        <td class="col-sm-1">493.0</td>
-                        <td class="col-sm-1">3,259.0</td>
-                        <td class="col-sm-1">
-                            <a href="#"><i class="fas fa-plus-circle mr-1"></i></a>
-                            <a href="#"><i class="fas fa-minus-circle mr-3"></i></a>
-                        </td>
-                    </tr>
-                    <tr>                      
-                        <td class="col-sm-8">Lona front calidad 1080 DPI 3x7 jareta superior</td>
-                        <td class="col-sm-1">7</td>
-                        <td class="col-sm-1">493.0</td>
-                        <td class="col-sm-1">3,259.0</td>
-                        <td class="col-sm-1">
-                            <a href="#"><i class="fas fa-plus-circle mr-1"></i></a>
-                            <a href="#"><i class="fas fa-minus-circle mr-3"></i></a>
-                        </td>
-                    </tr>
-                    <tr>                      
-                        <td class="col-sm-8">Lona front calidad 1080 DPI 3x7 jareta superior</td>
-                        <td class="col-sm-1">7</td>
-                        <td class="col-sm-1">493.0</td>
-                        <td class="col-sm-1">3,259.0</td>
-                        <td class="col-sm-1">
-                            <a href="#"><i class="fas fa-plus-circle mr-1"></i></a>
-                            <a href="#"><i class="fas fa-minus-circle mr-3"></i></a>
-                        </td>
-                    </tr>
-                    <tr>                      
-                        <td class="col-sm-8">Lona front calidad 1080 DPI 3x7 jareta superior</td>
-                        <td class="col-sm-1">7</td>
-                        <td class="col-sm-1">493.0</td>
-                        <td class="col-sm-1">3,259.0</td>
-                        <td class="col-sm-1">
-                            <a href="#"><i class="fas fa-plus-circle mr-1"></i></a>
-                            <a href="#"><i class="fas fa-minus-circle mr-3"></i></a>
-                        </td>
-                    </tr>
-                    <tr>                      
-                        <td class="col-sm-8">Lona front calidad 1080 DPI 3x7 jareta superior</td>
-                        <td class="col-sm-1">7</td>
-                        <td class="col-sm-1">493.0</td>
-                        <td class="col-sm-1">3,259.0</td>
-                        <td class="col-sm-1">
-                            <a href="#"><i class="fas fa-plus-circle mr-1"></i></a>
-                            <a href="#"><i class="fas fa-minus-circle mr-3"></i></a>
-                        </td>
-                    </tr>
-                    <tr>                      
-                        <td class="col-sm-8">Lona front calidad 1080 DPI 3x7 jareta superior</td>
-                        <td class="col-sm-1">7</td>
-                        <td class="col-sm-1">493.0</td>
-                        <td class="col-sm-1">3,259.0</td>
-                        <td class="col-sm-1">
-                            <a href="#"><i class="fas fa-plus-circle mr-1"></i></a>
-                            <a href="#"><i class="fas fa-minus-circle mr-3"></i></a>
-                        </td>
-                    </tr>
-                    <tr>                      
-                        <td class="col-sm-8">Lona front calidad 1080 DPI 3x7 jareta superior</td>
-                        <td class="col-sm-1">7</td>
-                        <td class="col-sm-1">493.0</td>
-                        <td class="col-sm-1">3,259.0</td>
-                        <td class="col-sm-1">
-                            <a href="#"><i class="fas fa-plus-circle mr-1"></i></a>
-                            <a href="#"><i class="fas fa-minus-circle mr-3"></i></a>
-                        </td>
-                    </tr>
                 </tbody>
               </table>
               <div class="row">
@@ -169,7 +69,7 @@
                       <div class="row">
                         <div class="col-md-4 text-right"><strong>Subtotal</strong></div>
                         <div class="col-md-4"><span class="text-muted"><strong>$ 2,3698</strong></span></div>
-                        <div class="col-md-4"><input type="text" class="form-control form-control-sm" name="importe_recibido" placeholder="Importe"/></div>     
+                        <div class="col-md-4"><input type="text" class="form-control form-control-sm" name="importe_recibido" placeholder="$ Abono"/></div>     
                         <div class="col-md-4 text-right"><strong>Iva</strong></div>
                         <div class="col-md-8"><span class="text-muted"><strong>$ 2,3698</strong></span></div>
                         <div class="col-md-4 text-right"><strong>Total</strong></div>
@@ -297,23 +197,41 @@
                 </div>
                 <div class="tab-pane fade {{ $tab == 'personalizado' ? 'active show' : '' }}" id="tab-personalizado">
                     <div class="row mt-2 mb-2">
+                        <div class="col-md-2"></div>
+                        <div class="col-md-4">
+                          Producto                               
+                        </div> 
+                        <div class="col-md-1">
+                            Cantidad                               
+                        </div> 
+                        <div class="col-md-1">
+                            Precio                              
+                        </div> 
+                        <div class="col-md-1">
+                            Importe                              
+                        </div> 
+                        <div class="col-4 col-sm-3 col-md-2">
+                          
+                        </div>
+                    </div>
+                    <div class="row mt-2 mb-2">
                       <div class="col-md-2"></div>
                       <div class="col-md-4">
-                        <input type="text" wire:model="nombre" class="form-control form-control-sm" placeholder="Producto">                                
+                        <input type="text" wire:model.debounce.lazy="nombre" onclick="this.select()" class="form-control form-control-sm" placeholder="Producto">                                
                       </div> 
                       <div class="col-md-1">
-                        <input type="text" wire:model="cantidad" class="form-control form-control-sm" placeholder="Cantidad">                                
+                        <input type="number" wire:model="cantidad" min="1" onclick="this.select()" class="form-control form-control-sm" placeholder="#">                                
                       </div> 
                       <div class="col-md-1">
-                        <input type="text" wire:model="precio" class="form-control form-control-sm" placeholder="Precio">                                
+                        <input type="number" wire:model="precio" min="1" onclick="this.select()" class="form-control form-control-sm" placeholder="$">                                
                       </div> 
                       <div class="col-md-1">
-                        <input type="text" wire:model="importe" class="form-control form-control-sm" placeholder="Importe" disabled>                                
+                        <span>$ {{ $importe}} </span>
                       </div> 
                       <div class="col-4 col-sm-3 col-md-2">
                         <button class="btn btn-sm btn-outline-info" wire:click="addtocart()"><i class="fas fa-shopping-cart"></i> Agregar</button>
                       </div>
-                  </div>
+                    </div>
                 </div>
               </div>            
         </div>
