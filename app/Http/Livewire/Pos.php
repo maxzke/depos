@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire;
 
+use App\Models\Cliente;
 use App\Models\Role;
 use App\Models\User;
 use Livewire\Component;
@@ -10,7 +11,11 @@ use Illuminate\Support\Str;
 class Pos extends Component{
 
     public $cart = [];
-    public $idp,$nombre,$precio,$importe,$cantidad,$abono;
+    public $idp,$nombre,$precio,$importe,$cantidad;
+    public $subtotal=0,$iva,$total;
+    public $abono;
+    public $cliente_search;
+    public $listado_clientes;
     
     public $tab="";
 
@@ -22,10 +27,12 @@ class Pos extends Component{
         $role = Role::find(1);
         $data['roles'] = $role->users;
         $data['productos'] = $this->cart;
+        //$data['listado_clientes'] = '';
         return view('livewire.pos',$data);
     }
 
     public function addtocart(){
+        $this->validate();
         $this->idp = Str::random(9);
         $producto = array(
             'id' => $this->idp,
@@ -35,24 +42,28 @@ class Pos extends Component{
             'importe'=>$this->importe
         );
         array_push($this->cart,$producto);
+        $this->subtotal += $this->importe;
         $this->reset(['nombre','cantidad','precio','importe']);
     }
 
     public function producto_increment($id){
+        $this->subtotal = 0;
         foreach ($this->cart as $key => $v) {
             if ($v['id'] == $id) {
-                $v['cantidad'] = intval($v['cantidad'])+1 ;
-                $this->cart[$key]['cantidad'] = intval($this->cart[$key]['cantidad']) +1;
-                $this->cart[$key]['importe'] = intval($this->cart[$key]['cantidad']) * intval($this->cart[$key]['precio']);                
+                $v['cantidad'] = floatval($v['cantidad'])+1 ;
+                $this->cart[$key]['cantidad'] = floatval($this->cart[$key]['cantidad']) +1;
+                $this->cart[$key]['importe'] = floatval($this->cart[$key]['cantidad']) * floatval($this->cart[$key]['precio']);                
             }
+            $this->subtotal += $this->cart[$key]['importe'];
         } 
     }
     public function producto_decrement($id){
+        $this->subtotal = 0;
         foreach ($this->cart as $key => $v) {
             if ($v['id'] == $id) {
-                $v['cantidad'] = intval($v['cantidad'])+1 ;
-                $this->cart[$key]['cantidad'] = intval($this->cart[$key]['cantidad']) -1;
-                $this->cart[$key]['importe'] = intval($this->cart[$key]['cantidad']) * intval($this->cart[$key]['precio']);                
+                $v['cantidad'] = floatval($v['cantidad'])+1 ;
+                $this->cart[$key]['cantidad'] = floatval($this->cart[$key]['cantidad']) -1;
+                $this->cart[$key]['importe'] = floatval($this->cart[$key]['cantidad']) * floatval($this->cart[$key]['precio']);                
                 /**
                  * Si cantidad < 0 se elimina el producto del array
                  */
@@ -60,11 +71,37 @@ class Pos extends Component{
                     unset($this->cart[$key]);
                 }
             }
+            $this->subtotal += $this->cart[$key]['importe'];
         }        
+    }
+
+    public function buscar_cliente(){
+        $this->listado_clientes = Cliente::where('nombre','like','%'.$this->cliente_search.'%')->limit(6)->get();
+        //$this->listado_clientes = $request_clientes->clientes;
+    }
+
+    public function select_cliente($id){
+        
     }
 
 
 
+/**
+     * DEFINO REGLAS
+     */
+    protected $rules = [
+        'nombre' => 'required',
+        'cantidad' => 'required',
+        'precio' => 'required'
+    ];
+    /**
+     * pERSONALIZO MENSAJES DE ERROR
+     */
+    protected $messages = [
+        'nombre.required' => 'Debes ingresar un producto',
+        'cantidad.required' => 'Debes ingresar una cantidad',
+        'precio.required' => 'Debes ingresar un precio unitario'
+    ];
 
 
 
@@ -84,4 +121,5 @@ class Pos extends Component{
 
 
 
-}
+
+}//endo f line

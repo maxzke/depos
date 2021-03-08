@@ -6,20 +6,29 @@
  * Copyright 2011-2021 Twitter, Inc.
  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
  */
+ 
+.mano:hover{
+  cursor: pointer;
+  color:#189802;
+}
 
  .categorias-productos{
   height: 45vh;
   overflow-y: scroll;
   width: 100%;
+  scrollbar-color: red yellow;
  }
 .pie{
-  background-color: #000;
+  /* background-color: #272822; */
   height: 39vh;
   overflow-y: auto;
   width: 100%;
 }
  .cliente{
-   background-color: #202020;
+   /* background-color: #272822; */
+   height: 45vh;
+  overflow-y: auto;
+  width: 100%;
  }
  .table-fixed thead {
   width: 97%;
@@ -28,17 +37,19 @@
   height: 30vh;
   overflow-y: auto;
   width: 100%;
+  /* color:#fff; */
 }
 .table-fixed thead, .table-fixed tbody, .table-fixed tr, .table-fixed td, .table-fixed th {
   display: block;
 }
 .table-fixed tbody td, .table-fixed thead > tr> th {
   float: left;
-  /* border-bottom-width: 0; */
+  /* border-bottom-width: 1px;
+  border-color: #2eda4a; */
 }
 .table-fixed tbody td{
   border-bottom-width: 1px;
-  border-color: #2c3036;
+  border-color: #5f6061;
 }
 
 :root {
@@ -97,7 +108,10 @@ body {
   line-height: 1.5;
   color: #aaa;
   text-align: left;
-  background-color: #171717;
+  /* background-color: #171717; */
+  /* background-color: #34383_d; */
+  /* background-color: #3e3e3e; */
+  background-color: #272822;
 }
 
 [tabindex="-1"]:focus:not(:focus-visible) {
@@ -1748,7 +1762,7 @@ pre code {
 }
 
 .table-hover tbody tr:hover {
-  color: #fff;
+  color: #c1c3c1;
   background-color: rgba(255, 255, 255, 0.075);
 }
 
@@ -4350,7 +4364,7 @@ input[type="button"].btn-block {
 .nav-pills .nav-link.active,
 .nav-pills .show > .nav-link {
   color: #fff;
-  background-color: #3a3f44;
+  background-color: #4a4a4a;
 }
 
 .nav-fill > .nav-link,
@@ -6116,7 +6130,7 @@ a.close.disabled {
   z-index: 1040;
   width: 100vw;
   height: 100vh;
-  background-color: #000;
+  background-color: #3e3e3e;
 }
 
 .modal-backdrop.fade {
@@ -6329,7 +6343,7 @@ a.close.disabled {
   padding: 0.25rem 0.5rem;
   color: #fff;
   text-align: center;
-  background-color: #000;
+  background-color: #3e3e3e;
   border-radius: 0.25rem;
 }
 
@@ -6889,23 +6903,23 @@ button.bg-dark:focus {
 }
 
 .border {
-  border: 1px solid #dee2e6 !important;
+  border: 1px solid #696969 !important;
 }
 
 .border-top {
-  border-top: 1px solid #dee2e6 !important;
+  border-top: 1px solid #696969 !important;
 }
 
 .border-right {
-  border-right: 1px solid #dee2e6 !important;
+  border-right: 1px solid #696969 !important;
 }
 
 .border-bottom {
-  border-bottom: 1px solid #dee2e6 !important;
+  border-bottom: 1px solid #696969 !important;
 }
 
 .border-left {
-  border-left: 1px solid #dee2e6 !important;
+  border-left: 1px solid #696969 !important;
 }
 
 .border-0 {
