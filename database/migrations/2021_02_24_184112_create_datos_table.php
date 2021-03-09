@@ -15,7 +15,7 @@ class CreateDatosTable extends Migration
     {
         Schema::create('datos', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('cliente_id');
+            $table->foreignId('cliente_id')->unique();
             $table->foreign('cliente_id')->references('id')->on('clientes');
             $table->string('razon_social');
             $table->string('rfc');

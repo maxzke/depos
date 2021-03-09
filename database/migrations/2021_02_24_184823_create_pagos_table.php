@@ -22,6 +22,8 @@ class CreatePagosTable extends Migration
             $table->foreignId('metodo_id');
             $table->foreign('metodo_id')->references('id')->on('metodos');
 
+            $table->decimal('importe',9,1);
+
             $table->timestamps();
         });
     }

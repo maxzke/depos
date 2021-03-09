@@ -16,7 +16,7 @@ class CreateComprobantesTable extends Migration
         Schema::create('comprobantes', function (Blueprint $table) {
             $table->id();
 
-            $table->foreignId('pago_id');
+            $table->foreignId('pago_id')->unique();
             $table->foreign('pago_id')->references('id')->on('pagos');
 
             $table->string('url_voucher');

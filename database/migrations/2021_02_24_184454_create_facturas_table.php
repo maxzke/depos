@@ -16,7 +16,7 @@ class CreateFacturasTable extends Migration
         Schema::create('facturas', function (Blueprint $table) {
             $table->id();
 
-            $table->foreignId('venta_id');
+            $table->foreignId('venta_id')->unique();
             $table->foreign('venta_id')->references('id')->on('ventas');
 
             $table->string('razon_social');

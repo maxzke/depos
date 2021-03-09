@@ -16,7 +16,7 @@ class CreateCreditosTable extends Migration
         Schema::create('creditos', function (Blueprint $table) {
             $table->id();
 
-            $table->foreignId('venta_id');
+            $table->foreignId('venta_id')->unique();
             $table->foreign('venta_id')->references('id')->on('ventas');
             
             $table->timestamps();

@@ -21,11 +21,13 @@ class Pos extends Component{
 
     public function render(){
         $this->importe = (floatval($this->cantidad))*(floatval($this->precio));
+
         $user = User::find(1);
         $data['users'] = $user->roles;
 
-        $role = Role::find(3);
+        $role = Role::find(1);
         $data['roles'] = $role->users;
+
         $data['productos'] = $this->cart;
         return view('livewire.pos',$data);
     }
