@@ -24,10 +24,9 @@ class Pos extends Component{
         $user = User::find(1);
         $data['users'] = $user->roles;
 
-        $role = Role::find(1);
+        $role = Role::find(3);
         $data['roles'] = $role->users;
         $data['productos'] = $this->cart;
-        //$data['listado_clientes'] = '';
         return view('livewire.pos',$data);
     }
 
@@ -76,8 +75,10 @@ class Pos extends Component{
     }
 
     public function buscar_cliente(){
-        $this->listado_clientes = Cliente::where('nombre','like','%'.$this->cliente_search.'%')->limit(6)->get();
-        //$this->listado_clientes = $request_clientes->clientes;
+        $this->validate([
+            'cliente_search' => 'required'
+            ]);
+        $this->listado_clientes = Cliente::where('nombre','like','%'.$this->cliente_search.'%')->get();
     }
 
     public function select_cliente($id){
@@ -100,7 +101,8 @@ class Pos extends Component{
     protected $messages = [
         'nombre.required' => 'Debes ingresar un producto',
         'cantidad.required' => 'Debes ingresar una cantidad',
-        'precio.required' => 'Debes ingresar un precio unitario'
+        'precio.required' => 'Debes ingresar un precio unitario',
+        'cliente_search.required' => 'Debes ingresar un nombre para buscar'
     ];
 
 

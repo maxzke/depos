@@ -250,13 +250,30 @@
                     <div class="row mt-2 mb-2">
                       <div class="col-md-2"></div>
                       <div class="col-md-4">
-                        <input type="text" wire:model.debounce.lazy="nombre" onclick="this.select()" class="form-control form-control-sm" placeholder="Producto">                                
+                        <input type="text" 
+                          wire:model.debounce.lazy="nombre" 
+                          onclick="this.select()" 
+                          class="form-control form-control-sm 
+                          @error('nombre')is-invalid @enderror" 
+                          placeholder="Producto">                                
                       </div> 
                       <div class="col-md-1">
-                        <input type="number" wire:model="cantidad" min="1" onclick="this.select()" class="form-control form-control-sm" placeholder="#">                                
+                        <input type="number" 
+                          wire:model="cantidad" 
+                          min="1" 
+                          onclick="this.select()" 
+                          class="form-control form-control-sm 
+                          @error('cantidad')is-invalid @enderror" 
+                          placeholder="#">                                
                       </div> 
                       <div class="col-md-1">
-                        <input type="number" wire:model="precio" min="1" onclick="this.select()" class="form-control form-control-sm" placeholder="$">                                
+                        <input type="number" 
+                          wire:model="precio" 
+                          min="1" 
+                          onclick="this.select()" 
+                          class="form-control form-control-sm 
+                          @error('precio')is-invalid @enderror" 
+                          placeholder="$">                                
                       </div> 
                       <div class="col-md-1">
                         <span>$ {{ number_format($importe,1,".","," ) }} </span>
@@ -268,19 +285,20 @@
                 </div>
                 <div class="tab-pane fade {{ $tab == 'search_cliente' ? 'active show' : '' }}" id="tab-search-cliente">
                   <div class="row">
-                    <div class="col-md-4 offset-3">
+                    <div class="col-md-6 offset-3">
                       <input type="text" 
-                        class="form-control form-control-sm" 
-                        placeholder="Cliente" 
+                        class="form-control form-control-sm mt-1 @error('cliente_search') is-invalid @enderror" 
+                        placeholder="Buscar cliente... presione enter para buscar." 
                         wire:model="cliente_search"
                         wire:keydown.enter="buscar_cliente">
+                        @error('cliente_search') <div class="invalid-feedback">{{ $message }}</div> @enderror
                       @if ($listado_clientes)
                         <table class="table table-sm table-hover">
                           <tbody>
                           @foreach ($listado_clientes as $cliente)
                           <tr>
-                            <td>{{ $cliente->nombre }}</td>
-                            <td><i class="fas fa-check-circle mano" wire:click="select_cliente({{ $cliente->id }})"></i></td>
+                            <td class="text-capitalize">{{ $cliente->nombre }}</td>
+                            <td><i class="fas fa-check-circle mano" wire:click="select_cliente({{ $cliente }})"></i></td>
                           </tr>                            
                           @endforeach                          
                         </tbody>
@@ -295,16 +313,7 @@
                 <div class="tab-pane fade {{ $tab == 'add_cliente' ? 'active show' : '' }}" id="tab-add-cliente">
                   <p>add</p>
                 </div> 
-              </div>            
-              <div class="row">
-                <div class="col-md-8 offset-4">
-                  @error('nombre') <span class="text-danger"><small>{{ $message }}</small></span> @enderror
-                  <br>
-                  @error('cantidad') <span class="text-danger"><small>{{ $message }}</small></span> @enderror
-                  <br>
-                  @error('precio') <span class="text-danger"><small>{{ $message }}</small></span> @enderror
-                </div>
-              </div>
+              </div>  
         </div>        
     </div>
 </div>
