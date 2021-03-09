@@ -58,6 +58,7 @@ class Pos extends Component{
     }
     public function producto_decrement($id){
         $this->subtotal = 0;
+        
         foreach ($this->cart as $key => $v) {
             if ($v['id'] == $id) {
                 $v['cantidad'] = floatval($v['cantidad'])+1 ;
@@ -70,8 +71,10 @@ class Pos extends Component{
                     unset($this->cart[$key]);
                 }
             }
-            $this->subtotal += $this->cart[$key]['importe'];
-        }        
+            if (!empty($this->cart)) {
+                $this->subtotal += $this->cart[$key]['importe'];
+            }   
+        }     
     }
 
     public function buscar_cliente(){
