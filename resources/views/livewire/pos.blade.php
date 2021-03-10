@@ -6,27 +6,27 @@
               <div class="col-md-12 cliente">
                 <span class="text-muted"><strong>Cliente</strong></span>
                 <br>
-                <span class="text-white">{{ $cliente_nombre }}</span>
+                <span class="text-white">{{ $seleccionado ? $seleccionado->nombre : '' }}</span>
                 <br>
                 <span class="text-muted"><strong>Dirección</strong></span>
                 <br>
-                <span class="text-white">{{ $cliente_direccion }}</span>
+                <span class="text-white">{{ $seleccionado ? $seleccionado->direccion : '' }}</span>
                 <br>
                 <span class="text-muted"><strong>Telefono</strong></span>
                 <br>
-                <span class="text-white">{{ $cliente_telefono }}</span>            
+                <span class="text-white">{{ $seleccionado ? $seleccionado->telefono : '' }}</span>            
                 <br>
                 <span class="text-muted"><strong>Correo</strong></span>
                 <br>
-                <span class="text-white">{{ $cliente_correo }}</span>
+                <span class="text-white">{{ $seleccionado ? $seleccionado->correo : '' }}</span>
                 <br>
                 <span class="text-muted"><strong>Rfc</strong></span>
                 <br>
-                <span class="text-white">{{ $cliente_rfc }}</span>
+                <span class="text-white">{{ $seleccionado ? $seleccionado->rfc : '' }}</span>
                 <br>
                 <span class="text-muted"><strong>Razon Social</strong></span>
                 <br>
-                <span class="text-white">{{ $cliente_razon_social }}</span>
+                <span class="text-white">{{ $seleccionado ? $seleccionado->razon_social : '' }}</span>
               </div>
             </div>
             <div class="row">
@@ -219,7 +219,7 @@
                 <div class="tab-pane fade {{ $tab == 'sublimacion' ? 'active show' : '' }}" id="tab-sublimacion">
                   <p>Etsy mixtape wayfarers, ethical wes anderson tofu before they sold out mcsweeney's organic lomo retro fanny pack lo-fi farm-to-table readymade. Messenger bag gentrify pitchfork tattooed craft beer, iphone skateboard locavore carles etsy salvia banksy hoodie helvetica. DIY synth PBR banksy irony. Leggings gentrify squid 8-bit cred pitchfork.</p>
                 </div>               
-                <div class="tab-pane fade {{ $tab == 'viniles' ? 'active show' : '' }}" id="tab-viniles">
+                <div class="tab-pane fade {{ $tab == 'viniles' ? 'active show' : '' }}" id="tab-viniles">                  
                     @if($users != null)
                         {{ $users }}
                     @endif
@@ -288,6 +288,7 @@
                     <div class="col-md-6 offset-3">
                       <input type="text" 
                         class="form-control form-control-sm mt-1 @error('cliente_search') is-invalid @enderror" 
+                        onclick="this.select()"
                         placeholder="Buscar cliente... presione enter para buscar." 
                         wire:model="cliente_search"
                         wire:keydown.enter="buscar_cliente">
@@ -298,7 +299,7 @@
                           @foreach ($listado_clientes as $cliente)
                           <tr>
                             <td class="text-capitalize">{{ $cliente->nombre }}</td>
-                            <td><i class="fas fa-check-circle incrementa" wire:click="select_cliente({{ $cliente }})"></i></td>
+                            <td><i class="fas fa-check-circle incrementa" wire:click="set_cliente_buscado({{ $cliente->id }})"></i></td>
                           </tr>                            
                           @endforeach                          
                         </tbody>
@@ -329,7 +330,7 @@
                         placeholder="Telefono (10 digitos)" 
                         wire:model="cliente_telefono"/>
                         <input 
-                        type="text" 
+                        type="email" 
                         class="form-control form-control-sm mt-1 col-sm-6 @error('cliente_correo') is-invalid @enderror" 
                         placeholder="Correo" 
                         wire:model="cliente_correo"/>

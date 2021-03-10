@@ -20,6 +20,7 @@ class Pos extends Component{
      * DATOS CLIENTE
      */
     public $cliente_id = 0;
+    public $cliente_seleccionado;
     public $cliente_nombre;
     public $cliente_direccion;
     public $cliente_telefono;
@@ -48,6 +49,8 @@ class Pos extends Component{
         /**
          * Fin Prueba de relaciones
          */
+        
+        $data['seleccionado'] = $this->cliente_seleccionado;
         $data['productos'] = $this->cart;
         return view('livewire.pos',$data);
     }
@@ -106,9 +109,9 @@ class Pos extends Component{
         $this->listado_clientes = Cliente::where('nombre','like','%'.$this->cliente_search.'%')->get();
     }
 
-    public function select_cliente($id){
-        
-    }
+    public function set_cliente_buscado($id){
+        $this->cliente_seleccionado = Cliente::find($id);        
+    }    
 
     public function add_cliente(){
         $this->validate([
@@ -116,9 +119,14 @@ class Pos extends Component{
             ]);
         $cliente = new Cliente;
         $cliente->nombre = $this->cliente_nombre;
-        $cliente->telefono = "2818701339";
+        $cliente->direccion = $this->cliente_direccion;
+        $cliente->telefono = $this->cliente_telefono;
+        $cliente->razon_social = $this->cliente_razon_social;
+        $cliente->rfc = $this->cliente_rfc;
+        $cliente->correo = $this->cliente_correo;
         $cliente->save();
         $this->cliente_id = $cliente->id;
+        $this->set_cliente_buscado($this->cliente_id);
     }
 
 
