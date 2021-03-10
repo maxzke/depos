@@ -6,47 +6,47 @@
               <div class="col-md-12 cliente">
                 <span class="text-muted"><strong>Cliente</strong></span>
                 <br>
-                <span class="text-white">David Ramirez Flores David Ramirez Ramirez RamirezRamirezRamirez</span>
+                <span class="text-white">{{ $cliente_nombre }}</span>
                 <br>
                 <span class="text-muted"><strong>Dirección</strong></span>
                 <br>
-                <span class="text-white">Guanajuato #8David</span>
+                <span class="text-white">{{ $cliente_direccion }}</span>
                 <br>
                 <span class="text-muted"><strong>Telefono</strong></span>
                 <br>
-                <span class="text-white">281 87 0 16 69</span>            
+                <span class="text-white">{{ $cliente_telefono }}</span>            
                 <br>
                 <span class="text-muted"><strong>Correo</strong></span>
                 <br>
-                <span class="text-white">ramzdave@gmail.com</span>
+                <span class="text-white">{{ $cliente_correo }}</span>
                 <br>
                 <span class="text-muted"><strong>Rfc</strong></span>
                 <br>
-                <span class="text-white">rafd841115pf5</span>
+                <span class="text-white">{{ $cliente_rfc }}</span>
                 <br>
                 <span class="text-muted"><strong>Razon Social</strong></span>
                 <br>
-                <span class="text-white">David Ramirez Flores</span>
+                <span class="text-white">{{ $cliente_razon_social }}</span>
               </div>
             </div>
             <div class="row">
               <div class="col-md-12">
                 <div class="row mt-1 mb-1">
                   <div class="col text-right">
-                    <i class="fas fa-search mano" 
+                    <i class="fas fa-search incrementa" 
                     wire:click="$set('tab', 'search_cliente')" 
                     data-toggle="tab" 
                     href="#tab-search-cliente">
                     </i>
                   </div>
                   <div class="col text-center">
-                    <i class="fas fa-pen mano" 
+                    <i class="fas fa-pen incrementa" 
                     wire:click="$set('tab', 'edit_cliente')" 
                     data-toggle="tab" 
                     href="#tab-edit-cliente"></i>
                   </div>
                   <div class="col text-left">
-                    <i class="fas fa-user-plus mano"  
+                    <i class="fas fa-user-plus incrementa"  
                     wire:click="$set('tab', 'add_cliente')" 
                     data-toggle="tab" 
                     href="#tab-add-cliente"></i>
@@ -57,7 +57,7 @@
         </div>
         <!-- Carrito -->
         <div class="col-md-8">
-            <table class="table table-sm table-hover table-fixed">
+            <table class="table table-sm table-fixed table-hover">
                 <thead>
                   <tr>
                     <th class="col-sm-8">Producto</th>
@@ -70,16 +70,16 @@
                 <tbody>
                 <?php 
                     foreach($productos as $producto):?>                         
-                      <tr>                      
+                      <tr class="renglon">                      
                         <td class="col-sm-8"><?php echo $producto['nombre']; ?></td>
                         <td class="col-sm-1"><?php echo $producto['cantidad']; ?></td>
                         <td class="col-sm-1"><?php echo number_format($producto['precio'],1,".","," ); ?></td>
                         <td class="col-sm-1"><?php echo number_format($producto['importe'],1,".","," ); ?></td>
                         <td class="col-sm-1">
                           <i wire:click="producto_increment('{{$producto['id']}}')" 
-                          class="fas fa-plus-circle mr-1 mano"></i>
+                          class="fas fa-plus-circle mr-1 incrementa"></i>
                           <i wire:click="producto_decrement('{{$producto['id']}}')" 
-                          class="fas fa-minus-circle mr-3 mano"></i>
+                          class="fas fa-minus-circle mr-3 decrementa"></i>
                         </td>
                     </tr>
                     <?php endforeach;   
@@ -298,7 +298,7 @@
                           @foreach ($listado_clientes as $cliente)
                           <tr>
                             <td class="text-capitalize">{{ $cliente->nombre }}</td>
-                            <td><i class="fas fa-check-circle mano" wire:click="select_cliente({{ $cliente }})"></i></td>
+                            <td><i class="fas fa-check-circle incrementa" wire:click="select_cliente({{ $cliente }})"></i></td>
                           </tr>                            
                           @endforeach                          
                         </tbody>
@@ -311,7 +311,46 @@
                   <p>Edit</p>
                 </div> 
                 <div class="tab-pane fade {{ $tab == 'add_cliente' ? 'active show' : '' }}" id="tab-add-cliente">
-                  <p>add</p>
+                  <div class="row">
+                    <div class="col-md-6 offset-3">
+                      <input 
+                        type="text" 
+                        class="form-control form-control-sm text-capitalize mt-1 @error('cliente_nombre') is-invalid @enderror" 
+                        placeholder="Nombre completo" 
+                        wire:model="cliente_nombre"/>
+                        <input 
+                        type="text" 
+                        class="form-control form-control-sm text-capitalize mt-1 @error('cliente_direccion') is-invalid @enderror" 
+                        placeholder="Dirección" 
+                        wire:model="cliente_direccion"/>
+                        <input 
+                        type="number" 
+                        class="form-control form-control-sm mt-1 col-sm-3 @error('cliente_telefono') is-invalid @enderror" 
+                        placeholder="Telefono (10 digitos)" 
+                        wire:model="cliente_telefono"/>
+                        <input 
+                        type="text" 
+                        class="form-control form-control-sm mt-1 col-sm-6 @error('cliente_correo') is-invalid @enderror" 
+                        placeholder="Correo" 
+                        wire:model="cliente_correo"/>
+                        <input 
+                        type="text" 
+                        class="form-control form-control-sm text-uppercase mt-1 col-sm-3 @error('cliente_rfc') is-invalid @enderror" 
+                        placeholder="RFC" 
+                        wire:model="cliente_rfc"/>
+                        <input 
+                        type="text" 
+                        class="form-control form-control-sm text-capitalize mt-1 col-sm-12 @error('cliente_razon_social') is-invalid @enderror" 
+                        placeholder="Razon social" 
+                        wire:model="cliente_razon_social"/>
+                        @error('cliente_nombre') <div class="invalid-feedback">{{ $message }}</div> @enderror
+                        <button type="button" 
+                          class="btn btn-sm btn-outline-info"
+                          wire:click="add_cliente()">
+                          <i class="fas fa-user"></i> Agregar
+                        </button>
+                    </div>
+                  </div>                  
                 </div> 
               </div>  
         </div>        

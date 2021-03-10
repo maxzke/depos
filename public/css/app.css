@@ -7,9 +7,16 @@
  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
  */
  
-.mano:hover{
-  cursor: pointer;
+.incrementa:hover{
+  /* cursor: pointer; */
   color:#189802;
+  transition: all .2s ease-in-out;
+  transform: scale(1.3);
+}
+.decrementa:hover{
+  color:#f85159;
+  transition: all .2s ease-in-out;
+  transform: scale(1.3);
 }
 
  .categorias-productos{
@@ -31,7 +38,7 @@
   width: 100%;
  }
  .table-fixed thead {
-  width: 97%;
+  width: 99%;
 }
 .table-fixed tbody {
   height: 30vh;

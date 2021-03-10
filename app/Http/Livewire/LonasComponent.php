@@ -16,7 +16,12 @@ class LonasComponent extends Component
     public function render(){
         $data['lonas'] = Lona::latest('id')->get();
         $pertenece = Lona::find(1);
-        $data['pertenece'] = $pertenece->tramos;
+        if ($pertenece) {
+            $data['pertenece'] = $pertenece->tramos;
+        }else{
+            $data['pertenece'] = null;
+        }
+        
         $data['tramos'] = Tramo::latest('id')->get();
         $data['acabados'] = Acabado::latest('id')->get();
         $data['array_tramos'] = $this->check_tramos;

@@ -14,18 +14,22 @@
               <hr>
               <table class="table table-sm table-hover">
                 <tbody>
-                  @foreach ($tramos as $tramo)
-                  <tr>
-                    <td class="text-capitalize">{{$tramo->medida}}</td>
-                    <td>
-                      <button type="button" class="btn btn-sm btn-outline-warning" wire:click="edit({{$tramo}})"><small>Editar</small></button>
-                    </td>
-                  </tr>
-                  @endforeach                  
+                  @if ($tramos != null)
+                    @foreach ($tramos as $tramo)
+                    <tr>
+                      <td class="text-capitalize">{{$tramo->medida}}</td>
+                      <td>
+                        <button type="button" class="btn btn-sm btn-outline-warning" wire:click="edit({{$tramo}})"><small>Editar</small></button>
+                      </td>
+                    </tr>
+                    @endforeach
+                  @endif                  
                 </tbody>
               </table>
               <div>
-                {{ $tramos->links()}}
+                @if ($tramos!= null)
+                  {{ $tramos->links()}}
+                @endif
               </div>
 
         </div>

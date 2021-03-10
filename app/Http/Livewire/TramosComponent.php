@@ -18,7 +18,11 @@ class TramosComponent extends Component
     public $editar = FALSE;
 
     public function render(){
-        $data['tramos'] = Tramo::first('id')->paginate(3);
+        $data['tramos'] = Tramo::latest('id')->paginate(3);
+        // $data['tramos'] = null;
+        // if ( $solicitud != null) {
+        //     $data['tramos'] = $solicitud;
+        // }
         return view('livewire.tramos-component',$data);
     }
 

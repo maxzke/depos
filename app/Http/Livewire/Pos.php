@@ -16,18 +16,38 @@ class Pos extends Component{
     public $abono;
     public $cliente_search;
     public $listado_clientes;
+    /**
+     * DATOS CLIENTE
+     */
+    public $cliente_id = 0;
+    public $cliente_nombre;
+    public $cliente_direccion;
+    public $cliente_telefono;
+    public $cliente_correo;
+    public $cliente_rfc;
+    public $cliente_razon_social;
+
     
     public $tab="";
 
     public function render(){
         $this->importe = (floatval($this->cantidad))*(floatval($this->precio));
-
+        /**
+         * Prueba de relaciones
+         */
         $user = User::find(1);
-        $data['users'] = $user->roles;
-
+        $data['users'] = null;
+        if ($user) {
+            $data['users'] = $user->roles;
+        }        
         $role = Role::find(1);
-        $data['roles'] = $role->users;
-
+        $data['roles'] = null;
+        if ($role) {
+            $data['roles'] = $role->users;
+        }
+        /**
+         * Fin Prueba de relaciones
+         */
         $data['productos'] = $this->cart;
         return view('livewire.pos',$data);
     }
@@ -90,6 +110,17 @@ class Pos extends Component{
         
     }
 
+    public function add_cliente(){
+        $this->validate([
+            'cliente_nombre' => ['required','unique:clientes,nombre']
+            ]);
+        $cliente = new Cliente;
+        $cliente->nombre = $this->cliente_nombre;
+        $cliente->telefono = "2818701339";
+        $cliente->save();
+        $this->cliente_id = $cliente->id;
+    }
+
 
 
 /**
@@ -107,7 +138,9 @@ class Pos extends Component{
         'nombre.required' => 'Debes ingresar un producto',
         'cantidad.required' => 'Debes ingresar una cantidad',
         'precio.required' => 'Debes ingresar un precio unitario',
-        'cliente_search.required' => 'Debes ingresar un nombre para buscar'
+        'cliente_search.required' => 'Debes ingresar un nombre para buscar',
+        'cliente_nombre.required' => 'Debes ingresar un nombre de cliente',
+        'cliente_nombre.unique' => 'El nombre de cliente ya se encuentra registrado',
     ];
 
 
