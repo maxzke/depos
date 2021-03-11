@@ -88,13 +88,31 @@
               </table>
               <div class="row">
                   <div class="col-md-8">
-                      espacio
-                      <div class="form-check">
-                        <label class="form-check-label">
-                          <input class="form-check-input" type="checkbox" value="">
-                          Facturar venta
-                        </label>
+                    <div class="row">
+                      <div class="col-md-12 text-center">
+                        <span>Seleccionar método de pago</span>
                       </div>
+                    </div>  
+                    <div class="row mt-1">
+                      {{-- METODOS DE PAGO --}}
+                      @foreach ($metodos as $metodo)
+                        <div class="col text-center">
+                          <fieldset class="form-group">
+                            <div class="form-check">
+                              <label class="form-check-label text-capitalize">
+                                <input 
+                                  wire:model="metodo_pago" 
+                                  type="radio" 
+                                  class="form-check-input" 
+                                  name="optionsRadios" 
+                                  value="{{$metodo->nombre}}">
+                                {{ $metodo->nombre }}
+                              </label>
+                            </div>
+                          </fieldset>
+                        </div>
+                      @endforeach
+                    </div>                    
                   </div>
                   <div class="col-md-4">
                       <div class="row">
@@ -104,12 +122,18 @@
                           <input type="number" 
                           wire:model.debounce.lazy="abono" 
                           class="form-control form-control-sm" 
-                          name="importe_recibido" 
+                          name="abono" 
                           onclick="this.select()"
-                          placeholder="$"/>
+                          placeholder="$abono"/>
                         </div>     
                         <div class="col-md-4 text-right"><strong>Iva</strong></div>
-                        <div class="col-md-8"><span><strong>$ 2,3698</strong></span></div>
+                        <div class="col-md-4"><span><strong>$ 1,3698</strong></span></div>
+                        <div class="col-md-4"><div class="form-check">
+                          <label class="form-check-label">
+                            <input wire:model="facturar" class="form-check-input" type="checkbox" value="1">
+                            Facturar
+                          </label>
+                        </div></div>
                         <div class="col-md-4 text-right"><strong>Total</strong></div>
                         <div class="col-md-4"><span><strong>$ 2,3698</strong></span></div>                            
                         <div class="col-md-4">

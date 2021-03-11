@@ -2,9 +2,15 @@
 
 namespace App\Http\Livewire;
 
+use App\Models\Abono;
 use App\Models\Cliente;
+use App\Models\Credito;
+use App\Models\Detalle;
+use App\Models\Factura;
+use App\Models\Metodo;
 use App\Models\Role;
 use App\Models\User;
+use App\Models\Venta;
 use Livewire\Component;
 use Illuminate\Support\Str;
 
@@ -27,6 +33,9 @@ class Pos extends Component{
     public $cliente_correo;
     public $cliente_rfc;
     public $cliente_razon_social;
+
+    public $metodo_pago = "efectivo";
+    public $facturar;
 
     
     public $tab="";
@@ -52,6 +61,7 @@ class Pos extends Component{
         
         $data['seleccionado'] = $this->cliente_seleccionado;
         $data['productos'] = $this->cart;
+        $data['metodos'] = Metodo::get();
         return view('livewire.pos',$data);
     }
 
@@ -127,6 +137,50 @@ class Pos extends Component{
         $cliente->save();
         $this->cliente_id = $cliente->id;
         $this->set_cliente_buscado($this->cliente_id);
+        $this->reset(['cliente_nombre','cliente_direccion','cliente_telefono','cliente_razon_social','cliente_rfc','cliente_correo']);
+    }
+
+    public function store_venta($user_id,$cliente_id){
+        $venta = new Venta;
+        $venta->user_id = $user_id;
+        $venta->cliente_id = $cliente_id;
+        $venta->save();
+        return $venta->id;
+    }
+
+    public function store_abono($venta_id,$metodo,$importe){
+        $abono = new Abono;
+        $abono->venta_id = $venta_id;
+        $abono->metodo = $metodo;
+        $abono->importe = $importe;
+        $abono->save();
+    }
+
+    function store_detalles($venta_id,$productos){
+        $detalle = new Detalle;
+        foreach ($productos as $producto) {
+            $detalle->venta_id = $venta_id;
+            $detalle->etapa_id = 1;
+            $detalle->producto = $producto['nombre'];
+            $detalle->cantidad = $producto['cantidad'];
+            $detalle->precio = $producto['precio'];
+            $detalle->importe = $producto['importe'];
+            $detalle->save();
+        }
+    }
+
+    function store_credito($venta_id){
+        $credito = new Credito;
+        $credito->venta_id = $venta_id;
+        $credito->save();
+    }
+
+    function store_factura($rfc,$correo,$rs){
+        $factura = new Factura;
+        $factura->rfc = $rfc;
+        $factura->correo = $correo;
+        $factura->razon_social = $rs;
+        $factura->save();
     }
 
 

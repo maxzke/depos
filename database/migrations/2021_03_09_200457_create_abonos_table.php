@@ -19,8 +19,7 @@ class CreateAbonosTable extends Migration
             $table->foreignId('venta_id');
             $table->foreign('venta_id')->references('id')->on('ventas');
 
-            $table->foreignId('metodo_id');
-            $table->foreign('metodo_id')->references('id')->on('metodos');
+            $table->string('metodo');
 
             $table->decimal('importe',9,1);
 

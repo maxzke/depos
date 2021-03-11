@@ -22,14 +22,14 @@ class MetodosComponent extends Component
     public function store(){
         $validatedData = $this->validate();
         Metodo::create([
-            'nombre' => $this->nombre
+            'nombre' => strtolower($this->nombre)
         ]);
         $this->reset(['nombre']);
     }
 
     public function edit(Metodo $metodo){
         $this->editar = TRUE;
-        $this->nombre = $metodo->nombre;
+        $this->nombre = strtolower($metodo->nombre);
         $this->metodo_id = $metodo->id;
         $this->text_boton = "Actualizar";
     }
@@ -38,7 +38,7 @@ class MetodosComponent extends Component
         $validatedData = $this->validate();
         $metodo = Metodo::find($this->metodo_id);
         $metodo->update([
-            'nombre' => $this->nombre
+            'nombre' => strtolower($this->nombre)
         ]);
         $this->text_boton = "Guardar";
         $this->reset(['nombre']);

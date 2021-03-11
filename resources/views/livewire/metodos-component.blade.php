@@ -4,7 +4,7 @@
         <div class="card-body bg-dark">
           <form class="form-inline" wire:submit.prevent="{{ $editar ? 'update' : 'store' }}">
             <div class="form-group">
-              <input type="text" class="form-control form-control-sm" wire:model="nombre" placeholder="Nuevo metodo">
+              <input type="text" class="form-control form-control-sm text-lowercase" wire:model="nombre" placeholder="Nuevo metodo">
             </div>
             <button type="submit" class="btn btn-sm btn-outline-success ml-1">{{ $text_boton}} </button>
         </form>
