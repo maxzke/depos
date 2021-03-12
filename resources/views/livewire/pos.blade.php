@@ -120,9 +120,9 @@
                         <div class="col-md-4"><span><strong>$ {{number_format($subtotal,1,".","," )}}</strong></span></div>
                         <div class="col-md-4">
                           <input type="number" 
-                          wire:model.debounce.lazy="abono" 
+                          wire:model="abono" 
+                          wire:keyup="abonar()"
                           class="form-control form-control-sm" 
-                          name="abono" 
                           onclick="this.select()"
                           placeholder="$abono"/>
                         </div>     
@@ -137,7 +137,8 @@
                         <div class="col-md-4 text-right"><strong>Total</strong></div>
                         <div class="col-md-4"><span><strong>$ 2,3698</strong></span></div>                            
                         <div class="col-md-4">
-                          <button class="btn btn-sm btn-outline-success btn-block mb-1">Cobrar</button>
+                          <button class="btn btn-sm btn-outline-success btn-block mb-1"
+                          wire:click="store()">Cobrar</button>
                         </div>                            
                       </div>                    
                   </div>
@@ -376,6 +377,9 @@
                         </button>
                     </div>
                   </div>                  
+                </div> 
+                <div class="tab-pane fade {{ $tab == 'pagar' ? 'active show' : '' }}" id="tab-pagar">
+                  <p> {{ $mensaje_pago }} </p>
                 </div> 
               </div>  
         </div>        

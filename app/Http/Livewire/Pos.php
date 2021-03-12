@@ -11,6 +11,7 @@ use App\Models\Metodo;
 use App\Models\Role;
 use App\Models\User;
 use App\Models\Venta;
+use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 use Illuminate\Support\Str;
 
@@ -34,10 +35,16 @@ class Pos extends Component{
     public $cliente_rfc;
     public $cliente_razon_social;
 
+    public $importe_pagado;
     public $metodo_pago = "efectivo";
     public $facturar;
 
-    
+    public $id_venta;
+    public $id_user = 1;
+    public $id_cliente;
+
+    public $mensaje_pago;
+
     public $tab="";
 
     public function render(){
@@ -120,7 +127,8 @@ class Pos extends Component{
     }
 
     public function set_cliente_buscado($id){
-        $this->cliente_seleccionado = Cliente::find($id);        
+        $this->cliente_seleccionado = Cliente::find($id);   
+        $this->id_cliente = $this->cliente_seleccionado->id;     
     }    
 
     public function add_cliente(){
@@ -140,7 +148,53 @@ class Pos extends Component{
         $this->reset(['cliente_nombre','cliente_direccion','cliente_telefono','cliente_razon_social','cliente_rfc','cliente_correo']);
     }
 
-    public function store_venta($user_id,$cliente_id){
+    /**
+     * store:
+     * Guarda la venta en curso
+     * Ventas
+     * Detalles
+     * Abonos
+     * Creditos
+     * Pedidos
+     * Facturas
+     */
+    public function store(){
+        DB::transaction(function () {
+            $this->id_venta = $this->store_venta($this->id_user,$this->id_cliente);
+            $this->store_detalles($this->id_venta,$this->cart);
+            $this->store_abono($this->id_venta,$this->metodo_pago,$this->importe_pagado); 
+        });        
+    }
+
+    public function abonar(){
+        $this->tab = "pagar";
+        $respuesta = $this->verifica_abono($this->subtotal,$this->abono);
+        $this->mensaje_pago = $respuesta['mensaje'];
+        $this->importe_pagado = $respuesta['importe'];
+    }
+
+    private function setImportePago($importe){
+        $this->importe_pagado = $importe;
+    }
+
+    private function verifica_abono($total,$abono){
+        $msg['mensaje'] = "";
+        $msg['importe'] = 0;
+        if ($total>0) {
+            if ($abono>=$total) {
+                $cambio = floatval($abono)-floatval($total);
+                $msg['mensaje'] = "Su Cambio: ".number_format($cambio,1,'.',',');  
+                $msg['importe'] = $total;
+            }else{
+                $falta =  floatval($total)-floatval($abono);
+                $msg['mensaje'] = "Saldo pendiente ".number_format($falta,1,'.',',');
+                $msg['importe'] = $abono;
+            }
+        }
+        return $msg;
+    }
+
+    private function store_venta($user_id,$cliente_id){
         $venta = new Venta;
         $venta->user_id = $user_id;
         $venta->cliente_id = $cliente_id;
@@ -148,7 +202,7 @@ class Pos extends Component{
         return $venta->id;
     }
 
-    public function store_abono($venta_id,$metodo,$importe){
+    private function store_abono($venta_id,$metodo,$importe){
         $abono = new Abono;
         $abono->venta_id = $venta_id;
         $abono->metodo = $metodo;
@@ -156,9 +210,9 @@ class Pos extends Component{
         $abono->save();
     }
 
-    function store_detalles($venta_id,$productos){
-        $detalle = new Detalle;
+    private function store_detalles($venta_id,$productos){        
         foreach ($productos as $producto) {
+            $detalle = new Detalle;
             $detalle->venta_id = $venta_id;
             $detalle->etapa_id = 1;
             $detalle->producto = $producto['nombre'];
@@ -169,14 +223,15 @@ class Pos extends Component{
         }
     }
 
-    function store_credito($venta_id){
+    private function store_credito($venta_id){
         $credito = new Credito;
         $credito->venta_id = $venta_id;
         $credito->save();
     }
 
-    function store_factura($rfc,$correo,$rs){
+    private function store_factura($venta_id, $rfc,$correo,$rs){
         $factura = new Factura;
+        $factura->venta_id = $venta_id;
         $factura->rfc = $rfc;
         $factura->correo = $correo;
         $factura->razon_social = $rs;
