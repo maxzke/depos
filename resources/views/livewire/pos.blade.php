@@ -379,7 +379,23 @@
                   </div>                  
                 </div> 
                 <div class="tab-pane fade {{ $tab == 'pagar' ? 'active show' : '' }}" id="tab-pagar">
-                  <p> {{ $mensaje_pago }} </p>
+                  <div class="row">
+                    <div class="col-md-6 offset-3">
+                      <p> {{ $mensaje_pago }} </p>
+                      @if ($campos_insuficientes)
+                        <div class="alert alert-dismissible alert-danger">
+                          <button type="button" class="close" data-dismiss="alert">&times;</button>
+                          <strong>Campos requeridos!</strong> completa la venta para poder proceder.
+                        </div>
+                      @endif
+                      @if ($venta_exitosa)
+                        <div class="alert alert-dismissible alert-success">
+                          <button type="button" class="close" data-dismiss="alert">&times;</button>
+                          Venta guardada exitosamente !
+                        </div>
+                      @endif
+                    </div>
+                  </div>
                 </div> 
               </div>  
         </div>        

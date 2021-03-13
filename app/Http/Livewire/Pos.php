@@ -35,15 +35,21 @@ class Pos extends Component{
     public $cliente_rfc;
     public $cliente_razon_social;
 
-    public $importe_pagado;
+    public $importe_pagado = 0;
     public $metodo_pago = "efectivo";
     public $facturar;
+    public $credito = FALSE;
 
     public $id_venta;
     public $id_user = 1;
-    public $id_cliente;
+    public $id_cliente = null;
 
     public $mensaje_pago;
+    /**
+     * CLICK EN COBRAR SIN CLIENTE OR CART[]
+     */
+    public $campos_insuficientes = FALSE;
+    public $venta_exitosa = FALSE;
 
     public $tab="";
 
@@ -159,18 +165,47 @@ class Pos extends Component{
      * Facturas
      */
     public function store(){
-        DB::transaction(function () {
-            $this->id_venta = $this->store_venta($this->id_user,$this->id_cliente);
-            $this->store_detalles($this->id_venta,$this->cart);
-            $this->store_abono($this->id_venta,$this->metodo_pago,$this->importe_pagado); 
-        });        
+        /**
+         * VALIDAR CAMPOS REQUERIDOS PARA PROCEDER A GUARDAR VENTA
+         */
+        $this->tab = "pagar";
+        if ($this->id_user !=null && $this->id_cliente !=null && count($this->cart)!=0) {
+            DB::transaction(function () {
+                $this->id_venta = $this->store_venta($this->id_user,$this->id_cliente);
+                $this->store_detalles($this->id_venta,$this->cart);
+                $this->store_abono($this->id_venta,$this->metodo_pago,$this->importe_pagado); 
+                if ($this->credito) {
+                    $this->store_credito($this->id_venta);
+                }
+                /**
+                 * RESET VALORES
+                 */
+                $this->campos_insuficientes = FALSE;
+                $this->venta_exitosa = TRUE;
+                $this->cliente_seleccionado = "";
+                $this->cart = [];
+                $this->abono = "";
+                $this->subtotal = 0;
+                $this->id_cliente = null;
+                $this->credito = FALSE;
+                $this->setImportePago(0);
+            }); 
+        }else{
+            $this->tab = "pagar";
+            $this->campos_insuficientes = TRUE;
+            $this->venta_exitosa = FALSE;
+        }
+               
     }
 
     public function abonar(){
+        if ($this->id_user !=null && $this->id_cliente !=null && count($this->cart)!=0) {
+            $this->campos_insuficientes = FALSE;
+        }
         $this->tab = "pagar";
         $respuesta = $this->verifica_abono($this->subtotal,$this->abono);
         $this->mensaje_pago = $respuesta['mensaje'];
-        $this->importe_pagado = $respuesta['importe'];
+        $this->setImportePago($respuesta['importe']);
     }
 
     private function setImportePago($importe){
@@ -185,7 +220,9 @@ class Pos extends Component{
                 $cambio = floatval($abono)-floatval($total);
                 $msg['mensaje'] = "Su Cambio: ".number_format($cambio,1,'.',',');  
                 $msg['importe'] = $total;
+                $this->credito = FALSE;
             }else{
+                $this->credito = TRUE;
                 $falta =  floatval($total)-floatval($abono);
                 $msg['mensaje'] = "Saldo pendiente ".number_format($falta,1,'.',',');
                 $msg['importe'] = $abono;
