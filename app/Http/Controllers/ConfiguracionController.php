@@ -7,7 +7,8 @@ use Illuminate\Http\Request;
 class ConfiguracionController extends Controller{
 
     public function index(){
-        return view('configurar');
+        $data['page'] = "configuracion";
+        return view('configurar',$data);
     }
     
 }

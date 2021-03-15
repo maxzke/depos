@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 class TpvController extends Controller
 {
     public function index(){
-        return view('tpv');
+        $data['page'] = "terminal";
+        return view('tpv',$data);
     }
 }

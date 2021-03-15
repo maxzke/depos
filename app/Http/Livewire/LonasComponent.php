@@ -13,6 +13,7 @@ class LonasComponent extends Component
     public $text_boton = "Guardar";
     public $editar = FALSE;
     public $check_tramos = [];
+    
     public function render(){
         $data['lonas'] = Lona::latest('id')->get();
         $pertenece = Lona::find(1);

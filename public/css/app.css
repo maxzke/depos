@@ -6,7 +6,9 @@
  * Copyright 2011-2021 Twitter, Inc.
  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
  */
- 
+ .pointer {
+	cursor: default;
+}
 .incrementa:hover{
   /* cursor: pointer; */
   color:#189802;
@@ -127,7 +129,8 @@ body {
   /* background-color: #171717; */
   /* background-color: #34383_d; */
   /* background-color: #3e3e3e; */
-  background-color: #272822;
+  /* background-color: #272822; */
+  background-color: #171717;
 }
 
 [tabindex="-1"]:focus:not(:focus-visible) {

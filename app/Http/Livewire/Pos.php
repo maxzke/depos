@@ -39,6 +39,7 @@ class Pos extends Component{
     public $metodo_pago = "efectivo";
     public $facturar;
     public $credito = FALSE;
+    public $importe_credito=0;
 
     public $id_venta;
     public $id_user = 1;
@@ -169,13 +170,13 @@ class Pos extends Component{
          * VALIDAR CAMPOS REQUERIDOS PARA PROCEDER A GUARDAR VENTA
          */
         $this->tab = "pagar";
-        if ($this->id_user !=null && $this->id_cliente !=null && count($this->cart)!=0) {
+        if ($this->id_user !=null && $this->id_cliente !=null && count($this->cart)!=0 && $this->abono != "") {
             DB::transaction(function () {
                 $this->id_venta = $this->store_venta($this->id_user,$this->id_cliente);
                 $this->store_detalles($this->id_venta,$this->cart);
                 $this->store_abono($this->id_venta,$this->metodo_pago,$this->importe_pagado); 
                 if ($this->credito) {
-                    $this->store_credito($this->id_venta);
+                    $this->store_credito($this->id_venta,$this->importe_credito);
                 }
                 /**
                  * RESET VALORES
@@ -224,6 +225,7 @@ class Pos extends Component{
             }else{
                 $this->credito = TRUE;
                 $falta =  floatval($total)-floatval($abono);
+                $this->importe_credito = $falta;
                 $msg['mensaje'] = "Saldo pendiente ".number_format($falta,1,'.',',');
                 $msg['importe'] = $abono;
             }
@@ -240,11 +242,13 @@ class Pos extends Component{
     }
 
     private function store_abono($venta_id,$metodo,$importe){
-        $abono = new Abono;
-        $abono->venta_id = $venta_id;
-        $abono->metodo = $metodo;
-        $abono->importe = $importe;
-        $abono->save();
+        if ($importe > 0) {
+            $abono = new Abono;
+            $abono->venta_id = $venta_id;
+            $abono->metodo = $metodo;
+            $abono->importe = $importe;
+            $abono->save();
+        }
     }
 
     private function store_detalles($venta_id,$productos){        
@@ -260,9 +264,10 @@ class Pos extends Component{
         }
     }
 
-    private function store_credito($venta_id){
+    private function store_credito($venta_id,$importe){
         $credito = new Credito;
         $credito->venta_id = $venta_id;
+        $credito->importe = $importe;
         $credito->save();
     }
 

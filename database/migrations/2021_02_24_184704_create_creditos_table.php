@@ -18,6 +18,8 @@ class CreateCreditosTable extends Migration
 
             $table->foreignId('venta_id')->unique();
             $table->foreign('venta_id')->references('id')->on('ventas');
+
+            $table->decimal('importe',9,1);
             
             $table->timestamps();
         });

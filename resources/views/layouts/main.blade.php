@@ -13,7 +13,7 @@
     @livewireStyles
   </head>
   <body>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <a class="navbar-brand" href="#">Digital Estudio</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor02" aria-controls="navbarColor02" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
@@ -21,13 +21,12 @@
       
         <div class="collapse navbar-collapse" id="navbarColor02">
           <ul class="navbar-nav mr-auto">
-            <li class="nav-item active">
+            <li class="nav-item {{ $page =='terminal' ? 'active' : ''  }}">
               <a class="nav-link" href="{{ url('terminal') }}">Terminal
-                <span class="sr-only">(current)</span>
               </a>
             </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#">Ventas
+            <li class="nav-item {{ $page =='ventas' ? 'active' : ''  }}">
+              <a class="nav-link" href="{{ url('ventas') }}">Ventas
               </a>
             </li>
             <li class="nav-item">
@@ -39,7 +38,7 @@
             <li class="nav-item">
               <a class="nav-link" href="#">Corte</a>
             </li>
-            <li class="nav-item">
+            <li class="nav-item {{ $page =='configuracion' ? 'active' : ''  }}">
                 <a class="nav-link" href="{{ url('configuracion') }}">Configuracion</a>
             </li>
             <li class="nav-item dropdown">
