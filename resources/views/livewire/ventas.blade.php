@@ -1,6 +1,29 @@
 <div>
     <div class="row">
         <div class="col-md-2 border-right">
+            <span class="text-muted"><strong>Cliente</strong></span>
+                <br>
+                <span class="text-white text-capitalize">{{ $cliente ? $cliente->nombre : '' }}</span>
+                <br>
+                <span class="text-muted"><strong>Dirección</strong></span>
+                <br>
+                <span class="text-white text-capitalize">{{ $cliente ? $cliente->direccion : '' }}</span>
+                <br>
+                <span class="text-muted"><strong>Telefono</strong></span>
+                <br>
+                <span class="text-white">{{ $cliente ? $cliente->telefono : '' }}</span>            
+                <br>
+                <span class="text-muted"><strong>Correo</strong></span>
+                <br>
+                <span class="text-white">{{ $cliente ? $cliente->correo : '' }}</span>
+                <br>
+                <span class="text-muted"><strong>Rfc</strong></span>
+                <br>
+                <span class="text-white">{{ $cliente ? $cliente->rfc : '' }}</span>
+                <br>
+                <span class="text-muted"><strong>Razon Social</strong></span>
+                <br>
+                <span class="text-white">{{ $cliente ? $cliente->razon_social : '' }}</span>
         </div>
         <div class="col-md-8">
             <table class="table table-sm table-fixed table-hover">
@@ -13,7 +36,7 @@
                   </tr>
                 </thead>
                 <tbody>
-                    @if ($productos != null)
+                    @if ($productos != null)                    
                         @foreach ($productos as $producto)
                             <tr class="renglon">                      
                                 <td class="col-sm-8"> {{ $producto->producto}} </td>
@@ -21,10 +44,72 @@
                                 <td class="col-sm-1">{{ number_format($producto->precio,1,".","," )}} </td>
                                 <td class="col-sm-1">{{ number_format($producto->importe,1,".","," )}}</td>
                             </tr>
+                            {{-- {{$subtotal += $producto->importe}} --}}
                         @endforeach
                     @endif
                 </tbody>
-            </table>           
+            </table>    
+            <div class="row">
+                <div class="col-md-8">
+                  <div class="row">
+                    <div class="col-md-12 text-center">
+                      <span>Seleccionar método de pago</span>
+                    </div>
+                  </div>  
+                  <div class="row mt-1">
+                    {{-- METODOS DE PAGO --}}
+                    @foreach ($metodos as $metodo)
+                      <div class="col text-center">
+                        <fieldset class="form-group">
+                          <div class="form-check">
+                            <label class="form-check-label text-capitalize">
+                              <input 
+                                wire:model="metodo_pago" 
+                                type="radio" 
+                                class="form-check-input" 
+                                name="optionsRadios" 
+                                value="{{$metodo->nombre}}">
+                              {{ $metodo->nombre }}
+                            </label>
+                          </div>
+                        </fieldset>
+                      </div>
+                    @endforeach
+                  </div> 
+                  <div class="row">
+                      <div class="col-md-12 text-center">
+                          <span class="text-warning"> {{ $saldo != (null) ? 'Saldo Pendiente $ '.$saldo->importe : ''  }}</span>
+                      </div>
+                  </div>                   
+                </div>
+                <div class="col-md-4">
+                    <div class="row">
+                      <div class="col-md-4 text-right"><strong>Subtotal</strong></div>
+                      <div class="col-md-4"><span><strong>$ {{number_format($subtotal,1,".","," )}}</strong></span></div>
+                      <div class="col-md-4">
+                        <input type="number" 
+                        wire:model="abono" 
+                        wire:keyup="abonar()"
+                        class="form-control form-control-sm" 
+                        onclick="this.select()"
+                        placeholder="$abono"/>
+                      </div>     
+                      <div class="col-md-4 text-right"><strong>Iva</strong></div>
+                      <div class="col-md-4"><span><strong>$ 1,3698</strong></span></div>
+                      <div class="col-md-4">
+                          @if ($facturar)
+                            Facturar
+                          @endif
+                      </div>
+                      <div class="col-md-4 text-right"><strong>Total</strong></div>
+                      <div class="col-md-4"><span><strong>$ 2,3698</strong></span></div>                            
+                      <div class="col-md-4">
+                        <button class="btn btn-sm btn-outline-success btn-block mb-1"
+                        wire:click="store()">Cobrar</button>
+                      </div>                            
+                    </div>                    
+                </div>
+            </div>       
         </div>
         <div class="col-md-2 border-left">
             <div class="categorias-productos mt-1">

@@ -22,7 +22,7 @@ class Pos extends Component{
     public $subtotal=0,$iva,$total;
     public $abono;
     public $cliente_search;
-    public $listado_clientes;
+    //public $listado_clientes;
     /**
      * DATOS CLIENTE
      */
@@ -37,7 +37,7 @@ class Pos extends Component{
 
     public $importe_pagado = 0;
     public $metodo_pago = "efectivo";
-    public $facturar;
+    public $facturar = false;
     public $credito = FALSE;
     public $importe_credito=0;
 
@@ -76,6 +76,11 @@ class Pos extends Component{
         $data['seleccionado'] = $this->cliente_seleccionado;
         $data['productos'] = $this->cart;
         $data['metodos'] = Metodo::get();
+        $data['listado_clientes'] = DB::table('clientes')
+            ->select('clientes.*')
+            ->where('clientes.nombre','LIKE',"%{$this->cliente_search}%")
+            ->orderBy('clientes.created_at', 'desc')
+            ->paginate(6);
         return view('livewire.pos',$data);
     }
 
@@ -126,12 +131,12 @@ class Pos extends Component{
         }     
     }
 
-    public function buscar_cliente(){
-        $this->validate([
-            'cliente_search' => 'required'
-            ]);
-        $this->listado_clientes = Cliente::where('nombre','like','%'.$this->cliente_search.'%')->get();
-    }
+    // public function buscar_cliente(){
+    //     $this->validate([
+    //         'cliente_search' => 'required'
+    //         ]);
+    //     $this->listado_clientes = Cliente::where('nombre','like','%'.$this->cliente_search.'%')->get();
+    // }
 
     public function set_cliente_buscado($id){
         $this->cliente_seleccionado = Cliente::find($id);   
@@ -172,7 +177,7 @@ class Pos extends Component{
         $this->tab = "pagar";
         if ($this->id_user !=null && $this->id_cliente !=null && count($this->cart)!=0 && $this->abono != "") {
             DB::transaction(function () {
-                $this->id_venta = $this->store_venta($this->id_user,$this->id_cliente);
+                $this->id_venta = $this->store_venta($this->id_user,$this->id_cliente,$this->facturar);
                 $this->store_detalles($this->id_venta,$this->cart);
                 $this->store_abono($this->id_venta,$this->metodo_pago,$this->importe_pagado); 
                 if ($this->credito) {
@@ -181,7 +186,7 @@ class Pos extends Component{
                 /**
                  * RESET VALORES
                  */
-                $this->campos_insuficientes = FALSE;
+                $this->campos_insuficientes = FALSE;                
                 $this->venta_exitosa = TRUE;
                 $this->cliente_seleccionado = "";
                 $this->cart = [];
@@ -233,10 +238,11 @@ class Pos extends Component{
         return $msg;
     }
 
-    private function store_venta($user_id,$cliente_id){
+    private function store_venta($user_id,$cliente_id,$factura){
         $venta = new Venta;
         $venta->user_id = $user_id;
         $venta->cliente_id = $cliente_id;
+        $venta->factura = $factura;
         $venta->save();
         return $venta->id;
     }

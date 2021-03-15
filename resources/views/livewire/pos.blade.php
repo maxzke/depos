@@ -128,12 +128,14 @@
                         </div>     
                         <div class="col-md-4 text-right"><strong>Iva</strong></div>
                         <div class="col-md-4"><span><strong>$ 1,3698</strong></span></div>
-                        <div class="col-md-4"><div class="form-check">
-                          <label class="form-check-label">
-                            <input wire:model="facturar" class="form-check-input" type="checkbox" value="1">
-                            Facturar
-                          </label>
-                        </div></div>
+                        <div class="col-md-4">
+                          <div class="form-check">
+                            <label class="form-check-label">
+                              <input wire:model="facturar" class="form-check-input" type="checkbox">
+                              factura
+                            </label>
+                          </div>
+                        </div>
                         <div class="col-md-4 text-right"><strong>Total</strong></div>
                         <div class="col-md-4"><span><strong>$ 2,3698</strong></span></div>                            
                         <div class="col-md-4">
@@ -315,10 +317,9 @@
                         class="form-control form-control-sm mt-1 @error('cliente_search') is-invalid @enderror" 
                         onclick="this.select()"
                         placeholder="Buscar cliente... presione enter para buscar." 
-                        wire:model="cliente_search"
-                        wire:keydown.enter="buscar_cliente">
+                        wire:model="cliente_search">
                         @error('cliente_search') <div class="invalid-feedback">{{ $message }}</div> @enderror
-                      @if ($listado_clientes)
+                      {{-- @if ($listado_clientes) --}}
                         <table class="table table-sm table-hover">
                           <tbody>
                           @foreach ($listado_clientes as $cliente)
@@ -329,7 +330,9 @@
                           @endforeach                          
                         </tbody>
                       </table>
-                      @endif  
+                      {{-- @else
+                      <span class="text-danger">Ningun cliente registrado</span>
+                      @endif  --}}
                     </div>
                   </div>
                 </div> 

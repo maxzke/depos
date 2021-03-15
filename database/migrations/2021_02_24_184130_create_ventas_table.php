@@ -22,6 +22,8 @@ class CreateVentasTable extends Migration
             $table->foreignId('cliente_id');
             $table->foreign('cliente_id')->references('id')->on('clientes');
 
+            $table->boolean('factura');
+
             $table->timestamps();
         });
     }

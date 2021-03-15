@@ -2,7 +2,7 @@
 
 namespace App\Http\Livewire;
 
-use App\Models\Detalle;
+use App\Models\Metodo;
 use App\Models\Venta;
 use Livewire\Component;
 use Livewire\WithPagination;
@@ -19,7 +19,11 @@ class Ventas extends Component{
     public $abonos = null;
     public $search_pendiente;
     public $search_historial;
-
+    public $subtotal = 0;
+    public $metodo_pago = 'efectivo';
+    public $saldo = null;
+    public $cliente = null;
+    public $facturar = false;
     public function render(){
         $data['ventas_historial'] = DB::table('ventas')
                         ->join('clientes','ventas.cliente_id','=','clientes.id')
@@ -41,12 +45,25 @@ class Ventas extends Component{
                         ->paginate(6);
         $data['productos'] = $this->detalles;
         $data['abonos'] = $this->abonos;
+        $data['metodos'] = Metodo::get();
         return view('livewire.ventas',$data);
     }
 
     public function show($id){
         $venta = Venta::find($id);
+        $this->facturar = $venta->factura;
         $this->detalles = $venta->detalles;
+        $this->cliente = $venta->cliente;
         $this->abonos = $venta->abonos;
+        $this->saldo = $venta->creditos;
+        $this->subtotal = $this->getSubtotalVenta($this->detalles);
+    }
+
+    private function getSubtotalVenta($detalles){
+        $subt = 0;
+        foreach ($detalles as $detalle) {
+            $subt += $detalle->importe;
+        }
+        return $subt;
     }
 }

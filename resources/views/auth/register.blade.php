@@ -1,6 +1,6 @@
 
 {{-- ------------------------------------------------------- --}}
-@extends('layouts/main')
+@extends('layouts/login')
 
 @section('content')
     <div class="container">
