@@ -40,7 +40,7 @@ body {
     color: whitesmoke
 }
 .text-darkyellow {
-    color: rgba(255, 235, 59, 0.432)
+    color: rgba(46, 207, 81, 0.432)
 }
 
 /* Lines */
@@ -66,7 +66,7 @@ body {
 .form-button:active:hover,
 .form-button.active:hover,
 .form-button.active:focus {
-    background-color: rgba(240, 230, 140, 0.473);
+    background-color: rgba(41, 128, 33, 0.9);
     border-color: rgba(255, 235, 59, 0.473);
     color: #e6e6e6;
 }
@@ -165,7 +165,7 @@ body {
 .form-control:focus {
     box-shadow: none;
 }
-.form-control::-webkit-input-placeholder { color: #BDBDBD; }
+.form-control::-webkit-input-placeholder { color: #e7e3e3; }
 
 /* Container */
 

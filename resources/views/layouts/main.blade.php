@@ -52,18 +52,27 @@
               </div>
             </li>
           </ul>
-            <ul class="navbar-nav ml-auto">
-                <li class="nav-item dropleft">
-                    <a class="nav-link dropdown-toggle" 
-                    data-toggle="dropdown" 
-                    href="#" role="button" 
-                    aria-haspopup="true" 
-                    aria-expanded="false">Cerrar sesión</a>
-                    <div class="dropdown-menu">
-                      <a class="dropdown-item" href="#">salir</a>
-                    </div>
-                  </li>
-            </ul>            
+          <ul class="navbar-nav ml-auto">
+            <li class="nav-link text-capitalize">
+              <i class="fas fa-user text-success"></i>
+              {{ auth()->user()->name }}
+            </li>
+            <li class="nav-item dropdown">              
+                <a class="nav-link dropdown-toggle" 
+                data-toggle="dropdown" 
+                href="#" role="button" 
+                aria-haspopup="true" 
+                aria-expanded="false">Cerrar sesión</a>
+                <div class="dropdown-menu">
+                  <form method="POST" action="{{ route('logout')}}">
+                    @csrf
+                    <a class="dropdown-item" 
+                      href="{{ route('logout')}}" 
+                      onclick="event.preventDefault(); this.closest('form').submit();">Salir</a>
+                  </form>
+                </div>
+              </li>
+          </ul>            
         </div>
       </nav>
       <div class="container-fluid">

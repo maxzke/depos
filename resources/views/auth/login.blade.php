@@ -1,5 +1,3 @@
-{{--  --}}
-
 
 @extends('layouts/login')
 
@@ -18,17 +16,17 @@
             </div>
         @endif
     </div>
-        <h3 class="text-whitesmoke">Digital Estudio</h3>
+        <h1 class="text-whitesmoke">Digital Estudio</h1>
         <p class="text-whitesmoke">Iniciar Sesión</p>
     <div class="container-content">
         <form method="POST" action="{{ route('login') }}" class="margin-t">
             @csrf
             <div class="form-group">
-                <input type="email" id="email" name="email" :value="old('email')" class="form-control" placeholder="Correo" required autofocus/>
+                <input type="email" id="email" name="email" :value="old('email')" class="form-control" placeholder="usuario" required autofocus autocomplete="off"/>
                 {{-- <x-jet-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autofocus /> --}}
             </div>
             <div class="form-group">
-                <input id="password" type="password" name="password" class="form-control" required autocomplete="current-password"/>
+                <input id="password" type="password" name="password" class="form-control" placeholder="password" required autocomplete="off"/>
                 {{-- <x-jet-input id="password" class="block mt-1 w-full" type="password" name="password" required autocomplete="current-password" /> --}}
             </div>
             
@@ -43,8 +41,8 @@
                 </a>
             @endif
 
-            <p class="text-whitesmoke text-center"><small>Do not have an account?</small></p>
-            <a class="text-darkyellow" href="{{ route('register')}}"><small>Registrarse</small></a>
+            {{-- <p class="text-whitesmoke text-center"><small>Do not have an account?</small></p> --}}
+            {{-- <a class="text-darkyellow" href="{{ route('register')}}"><small>Registrarse</small></a> --}}
         </form>
         <p class="margin-t text-whitesmoke"><small> DigitalEstudio &copy; 2021</small> </p>
     </div>

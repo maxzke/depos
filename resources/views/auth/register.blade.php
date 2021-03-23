@@ -5,7 +5,9 @@
 @section('content')
     <div class="container">
         <div class="row">
-            <div class="col-md-12 text-center">
+            <div class="col-md-12 text-center mt-3">
+                <h4>Registrar nuevo Usuario</h4>
+                <x-jet-validation-errors class="mb-4 text-danger" />
                 <form method="POST" action="{{ route('register') }}">
                     @csrf        
                     <div>
@@ -16,6 +18,18 @@
                     <div class="mt-4">
                         <x-jet-label for="email" value="{{ __('Email') }}" />
                         <x-jet-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autocomplete="off" />
+                    </div>
+
+                    <div class="mt-4">
+                        <x-jet-label for="role" value="{{ __('Role') }}" />
+                        <select name="role" id="role" class="block mt-1 w-full" required>
+                            <option disabled selected value>Seleccionar</option>
+                            <option value="general">General</option>
+                            <option value="diseno">Diseño</option>
+                            <option value="admon">Admon</option>
+                            <option value="prensa">Prensa</option>
+                          </select>
+                        {{-- <x-jet-input id="role" class="block mt-1 w-full" type="text" name="role" :value="old('role')" required autocomplete="off" /> --}}
                     </div>
         
                     <div class="mt-4">
