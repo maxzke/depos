@@ -11,6 +11,8 @@ use App\Models\Metodo;
 use App\Models\Role;
 use App\Models\User;
 use App\Models\Venta;
+use App\Models\Lona;
+
 use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 use Illuminate\Support\Str;
@@ -47,6 +49,18 @@ class Pos extends Component{
 
     public $mensaje_pago;
     /**
+     * LONAS
+     */
+    public $id_lona=null;
+    public $tramos_lonas;
+    public $lonasearh;
+    public $id_tramos_lonas;
+    public $acabados_lonas;
+    public $id_acabados_lonas;
+    public $precio_calidad_lona;
+    public $inputAncho;
+    public $inputAlto;
+    /**
      * CLICK EN COBRAR SIN CLIENTE OR CART[]
      */
     public $campos_insuficientes = FALSE;
@@ -55,6 +69,14 @@ class Pos extends Component{
     public $tab="";
 
     public function render(){
+        $data['lonas'] = Lona::get();
+        if(!empty($this->id_lona)) {
+            $this->lonasearh = Lona::find($this->id_lona);
+            $this->tramos_lonas = $this->lonasearh->tramos;
+            $this->acabados_lonas = $this->lonasearh->acabados;
+        }
+
+
         $this->importe = (floatval($this->cantidad))*(floatval($this->precio));
         /**
          * Prueba de relaciones
@@ -82,6 +104,28 @@ class Pos extends Component{
             ->orderBy('clientes.created_at', 'desc')
             ->paginate(6);
         return view('livewire.pos',$data);
+    }
+
+    public function calcular_lona(){
+        $area_1 = $this->obtenerArea($this->inputAncho,$this->tramos_lonas);
+        $area_2 = $this->obtenerArea($this->inputAlto,$this->tramos_lonas);
+    }
+    private function obtenerArea($lado,$arrayTramos){
+        $tramo = 0;
+        $optimo = 0;
+        $area = 0;
+        foreach ($arrayTramos as $itemTramo) {
+            $tramo = $itemTramo->medida;
+            if ($lado <= $tramo) {
+                $optimo = $tramo;
+            }
+        }
+        $area = (floatval($optimo)) * (floatval($lado));
+        $msg=array(
+            'area' => $area,
+            'tramo' => $optimo
+        );
+        return $msg;
     }
 
     public function addtocart(){

@@ -180,30 +180,75 @@
                             <div class=" row">
                                 <label for="tipoLona" class="col-sm-2">Lona</label> 
                                 <div class="col-sm-10">
-                                    <select id="tipoLona" class="form-control form-control-sm">
-                                        <option value="2">
-                                            LONA FRONTLIT 10 ONZAS
-                                        </option>
-                                        <option value="3">
-                                            LONA FRONTLIT 13 ONZAS
-                                        </option>
-                                        <option value="4">
-                                            LONA MESH DE 18 ONZAS
-                                        </option>
+                                    <select wire:model="id_lona" id="tipoLona" class="form-control form-control-sm">
+                                      <option value='' selected> 
+                                        Seleccionar
+                                      </option>
+                                      @if ($lonas)
+                                        @foreach ($lonas as $lona)
+                                          <option value="{{ $lona->id }}">
+                                              {{ $lona->nombre }}
+                                          </option>
+                                        @endforeach
+                                      @endif
                                     </select>
                                 </div>
                             </div> 
                             <div class=" row">
                                 <label for="acabadoLona" class="col-sm-2">Acabado</label> 
                                 <div class="col-sm-10">
-                                    <select id="acabadoLona" class="form-control form-control-sm">
+                                    <select wire:model="id_acabados_lonas" id="acabadoLona" class="form-control form-control-sm">
+                                      <option value='' selected> 
+                                        Seleccionar
+                                      </option>
+                                      @if ($acabados_lonas)
+                                        @foreach ($acabados_lonas as $acabado)
+                                          <option value="{{ $acabado->id }}">
+                                              {{ $acabado->nombre }}
+                                          </option>
+                                        @endforeach
+                                      @endif
                                     </select>
                                 </div>
                             </div>
                             <div class=" row">
+                              <label for="tramoLona" class="col-sm-2">TRAMOS</label> 
+                              <div class="col-sm-10">
+                                  <select id="tramoLona" class="form-control form-control-sm">
+                                    <option value='' selected> 
+                                      Seleccionar
+                                    </option>
+                                    @if ($tramos_lonas)
+                                      @foreach ($tramos_lonas as $tramo)
+                                        <option value="{{ $tramo->id }}">
+                                            {{ $tramo->medida }}
+                                        </option>
+                                      @endforeach
+                                    @endif
+                                  </select>
+                              </div>
+                          </div>
+                            <div class=" row">
                                 <label for="calidadLona" class="col-sm-2">Calidad</label> 
                                 <div class="col-sm-10">
-                                    <select id="calidadLona" class="form-control form-control-sm text-uppercase">
+                                    <select wire:model="precio_calidad_lona" id="calidadLona" class="form-control form-control-sm text-capitalize">
+                                      <option value='' selected> 
+                                        Seleccionar
+                                      </option>
+                                      @if ($lonasearh)
+                                        <option value="{{ $lonasearh->calidad_360 }}">
+                                          Calidad 360 DPI - $ {{ $lonasearh->calidad_360 }}
+                                        </option>
+                                        <option value="{{ $lonasearh->calidad_360 }}">
+                                          Calidad 720 DPI - $ {{ $lonasearh->calidad_720 }}
+                                        </option>
+                                        <option value="{{ $lonasearh->calidad_360 }}">
+                                          Calidad 1024 DPI - $ {{ $lonasearh->calidad_1024 }}
+                                        </option>
+                                        <option value="{{ $lonasearh->calidad_360 }}">
+                                          Calidad FULLHD DPI - $ {{ $lonasearh->calidad_fullhd }}
+                                        </option>                                          
+                                      @endif                                      
                                     </select>
                                 </div>
                             </div> 

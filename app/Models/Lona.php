@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Tramo;
+use App\Models\Acabado;
 
 class Lona extends Model
 {
@@ -13,5 +14,9 @@ class Lona extends Model
 
     public function tramos(){
         return $this->belongsToMany(Tramo::class);
+    }
+
+    public function acabados(){
+        return $this->belongsToMany(Acabado::class);
     }
 }
