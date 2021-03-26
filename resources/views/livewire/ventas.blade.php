@@ -53,7 +53,7 @@
                 <div class="col-md-8">
                   <div class="row">
                     <div class="col-md-12 text-center">
-                      <span>Seleccionar método de pago</span>
+                      <span>Seleccionar método de pago {{ $mensaje }} </span>
                     </div>
                   </div>  
                   <div class="row mt-1">
@@ -105,7 +105,7 @@
                       <div class="col-md-4"><span><strong>$ 2,3698</strong></span></div>                            
                       <div class="col-md-4">
                         <button class="btn btn-sm btn-outline-success btn-block mb-1"
-                        wire:click="store()">Cobrar</button>
+                        wire:click="storeAbono()">Cobrar</button>
                       </div>                            
                     </div>                    
                 </div>
@@ -156,7 +156,12 @@
         <div class="col-md-6 text-center offset-1">            
             <div id="myTabContent" class="tab-content">              
                 {{-- pendientes tab-pane --}}
-                <div class="tab-pane fade {{ $tab == 'pendientes' ? 'active show' : '' }}" id="tab-pendientes">   
+                <div class="tab-pane fade {{ $tab == 'pendientes' ? 'active show' : '' }}" id="tab-pendientes">  
+                  <div class="row">
+                    <div class="col-md-12 text-left">
+                      <span> Listado de Ventas <i class="fas fa-dollar-sign"></i> Pendientes</span> 
+                    </div>
+                  </div>
                     <input type="text" class="form-control form-control-sm col-md-7 mt-1" placeholder="Buscar"
                         wire:model="search_pendiente"
                         onclick="this.select()">                 
@@ -186,6 +191,11 @@
                 </div>              
                 {{-- historial tab-pane --}}
                 <div class="tab-pane fade {{ $tab == 'historial' ? 'active show' : '' }}" id="tab-historial">
+                  <div class="row">
+                    <div class="col-md-12 text-left">
+                      <span> <i class="fas fa-history"></i> Historial de Ventas Realizadas</span> 
+                    </div>
+                  </div>
                     <input type="text" class="form-control form-control-sm col-md-7 mt-1" placeholder="Buscar"
                         wire:model="search_historial"
                         onclick="this.select()"> 

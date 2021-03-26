@@ -15,6 +15,7 @@ class Ventas extends Component{
     
     public $tab = "pendientes";
 
+    public $venta;
     public $detalles = null;
     public $abonos = null;
     public $search_pendiente;
@@ -24,7 +25,11 @@ class Ventas extends Component{
     public $saldo = null;
     public $cliente = null;
     public $facturar = false;
+
+    public $mensaje;
+
     public function render(){
+
         $data['ventas_historial'] = DB::table('ventas')
                         ->join('clientes','ventas.cliente_id','=','clientes.id')
                         ->select('ventas.*','clientes.nombre','clientes.id as id_cliente')
@@ -49,13 +54,21 @@ class Ventas extends Component{
         return view('livewire.ventas',$data);
     }
 
+    public function storeAbono(){
+        if (empty($this->venta)) {
+            $this->mensaje = "vacio";
+        }else{
+            $this->mensaje = $this->venta->cliente->nombre;
+        }
+    }
+
     public function show($id){
-        $venta = Venta::find($id);
-        $this->facturar = $venta->factura;
-        $this->detalles = $venta->detalles;
-        $this->cliente = $venta->cliente;
-        $this->abonos = $venta->abonos;
-        $this->saldo = $venta->creditos;
+        $this->venta = Venta::find($id);
+        $this->facturar = $this->venta->factura;
+        $this->detalles = $this->venta->detalles;
+        $this->cliente = $this->venta->cliente;
+        $this->abonos = $this->venta->abonos;
+        $this->saldo = $this->venta->creditos;
         $this->subtotal = $this->getSubtotalVenta($this->detalles);
     }
 

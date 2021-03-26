@@ -255,11 +255,21 @@
                             <div class=" row">
                                 <label for="anchoLona" class="col-sm-2">Ancho</label> 
                                 <div class="col-sm-3">
-                                    <input type="text" step="1" id="anchoLona" placeholder="metros" class="form-control form-control-sm" onclick="this.select();">
+                                    <input type="number" 
+                                      step="1" id="anchoLona" 
+                                      placeholder="metros" 
+                                      class="form-control form-control-sm" 
+                                      onclick="this.select();"
+                                      wire:model="inputAncho">
                                 </div>
                                 <label for="altoLona" class="col-sm-2">Alto</label> 
                                 <div class="col-sm-3">
-                                    <input type="text" id="altoLona" placeholder="metros" class="form-control form-control-sm" onclick="this.select();">
+                                    <input type="number" 
+                                    id="altoLona" 
+                                    placeholder="metros" 
+                                    class="form-control form-control-sm" 
+                                    onclick="this.select();"
+                                    wire:model="inputAlto">
                                 </div>
                             </div> 
                             <div class=" row">
@@ -268,9 +278,12 @@
                                     <input type="number" min="1" id="cantidadLona" class="form-control form-control-sm" onclick="this.select();">
                                 </div>
                                 <div class="col-sm-3 offset-sm-2">
-                                    <button class="btn btn-sm btn-outline-warning btn-block">Calcular</button>
+                                    <button class="btn btn-sm btn-outline-warning btn-block" 
+                                    wire:click="calcular_lona()">Calcular</button>
                                 </div>
                             </div>
+                            <span>Area1: {{ $area_1 }} </span>
+                            <span>Area2: {{ $area_2 }} </span>
                       </div> 
                       <div class="col-md-4 mb-1">
                         <span class="text-muted"><strong>Precio</strong></span>

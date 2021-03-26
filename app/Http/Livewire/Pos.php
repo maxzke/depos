@@ -60,6 +60,10 @@ class Pos extends Component{
     public $precio_calidad_lona;
     public $inputAncho;
     public $inputAlto;
+    public $area_1;
+    public $optimo_1;
+    public $area_2;
+    public $optimo_2;
     /**
      * CLICK EN COBRAR SIN CLIENTE OR CART[]
      */
@@ -107,26 +111,66 @@ class Pos extends Component{
     }
 
     public function calcular_lona(){
-        $area_1 = $this->obtenerArea($this->inputAncho,$this->tramos_lonas);
-        $area_2 = $this->obtenerArea($this->inputAlto,$this->tramos_lonas);
+        $this->area_1 = $this->obtenerArea($this->inputAncho,$this->inputAlto,$this->tramos_lonas);
+        //$this->area_2 = $this->obtenerArea($this->inputAlto,$this->tramos_lonas);
+        // $this->area_2 = $this->tramos_lonas;
     }
-    private function obtenerArea($lado,$arrayTramos){
+
+    private function obtenerArea($ancho,$alto,$arrayTramos){
         $tramo = 0;
-        $optimo = 0;
-        $area = 0;
+        $optimo1 = 0;
+        $area1 = 0;
         foreach ($arrayTramos as $itemTramo) {
-            $tramo = $itemTramo->medida;
-            if ($lado <= $tramo) {
-                $optimo = $tramo;
+            $tramo = floatval($itemTramo->medida);
+            // if (floatval($ancho) <= floatval($tramo)) {
+            if ( bccomp(floatval($ancho),$tramo)=== -1) {
+                $optimo1 = $tramo;
             }
         }
-        $area = (floatval($optimo)) * (floatval($lado));
-        $msg=array(
-            'area' => $area,
-            'tramo' => $optimo
-        );
+        $area1 = (floatval($optimo1)) * (floatval($ancho));
+
+        $tramo = 0;
+        $optimo2 = 0;
+        $area2 = 0;
+        foreach ($arrayTramos as $itemTramo) {
+            $tramo = floatval($itemTramo->medida);
+            // if (floatval($alto) <= floatval($tramo)) {
+            if ( bccomp(floatval($alto),$tramo)=== -1) {
+                $optimo2 = $tramo;
+            }
+             
+        }
+        $area2 = (floatval($optimo2)) * (floatval($alto));
+
+        if (bccomp($area1,$area2)== -1) {
+            $msg = "1-a1=".$area1."a2=".$area2."optimo1=".$optimo1."optimo2=".$optimo2."ancho=".$ancho."alto=".$alto;
+        }else{
+            $msg = "2-a1=".$area1."a2=".$area2."optimo1=".$optimo1."optimo2=".$optimo2."alto=".$alto."ancho=".$ancho;
+        }
+
         return $msg;
+        
     }
+
+
+
+    // private function obtenerArea($lado,$arrayTramos){
+    //     $tramo = 0;
+    //     $optimo = 0;
+    //     $area = 0;
+    //     foreach ($arrayTramos as $itemTramo) {
+    //         $tramo = $itemTramo->medida;
+    //         if (floatval($lado) <= floatval($tramo)) {
+    //             $optimo = $tramo;
+    //         }
+    //     }
+    //     $area = (floatval($optimo)) * (floatval($lado));
+    //     $msg=array(
+    //         'area' => $area,
+    //         'tramo' => $optimo
+    //     );
+    //     return $msg;
+    // }
 
     public function addtocart(){
         $this->validate();
