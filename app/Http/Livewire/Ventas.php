@@ -56,10 +56,25 @@ class Ventas extends Component{
 
     public function storeAbono(){
         if (empty($this->venta)) {
-            $this->mensaje = "vacio";
+            $this->alerta('warning','Debe seleccionar un Cliente');
         }else{
             $this->mensaje = $this->venta->cliente->nombre;
+            $this->alerta('success','abono cargado');
+            
         }
+    }
+
+    private function alerta($tipo,$mensaje){
+        $this->alert($tipo, $mensaje, [
+            'position' =>  'bottom', 
+            'timer' =>  3100,  
+            'toast' =>  true, 
+            'text' =>  '', 
+            'confirmButtonText' =>  'Ok', 
+            'cancelButtonText' =>  'Cancel', 
+            'showCancelButton' =>  false, 
+            'showConfirmButton' =>  false, 
+        ]);
     }
 
     public function show($id){
