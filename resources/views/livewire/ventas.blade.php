@@ -88,23 +88,28 @@
                       <div class="col-md-4"><span><strong>$ {{number_format($subtotal,1,".","," )}}</strong></span></div>
                       <div class="col-md-4">
                         <input type="number" 
-                        wire:model="abono" 
+                        wire:model="importeAbono" 
                         wire:keyup="abonar()"
                         class="form-control form-control-sm" 
-                        onclick="this.select()"
-                        placeholder="$abono"/>
+                        onclick="this.select()"/>
                       </div>     
                       <div class="col-md-4 text-right"><strong>Iva</strong></div>
                       <div class="col-md-4"><span><strong>$ 1,3698</strong></span></div>
                       <div class="col-md-4">
                           @if ($facturar)
-                            Facturar
+                            Factura <i class="fas fa-check text-success"></i>
+                          @else
+                            Factura <i class="fas fa-ban text-danger"></i>
                           @endif
                       </div>
                       <div class="col-md-4 text-right"><strong>Total</strong></div>
                       <div class="col-md-4"><span><strong>$ 2,3698</strong></span></div>                            
                       <div class="col-md-4">
-                        <button class="btn btn-sm btn-outline-success btn-block mb-1"
+                        <button class="btn btn-sm btn-outline-success btn-block mb-1" @if ($venta_seleccionada == null)
+                            disabled
+                        @else
+
+                        @endif
                         wire:click="storeAbono()">Cobrar</button>
                       </div>                            
                     </div>                    
