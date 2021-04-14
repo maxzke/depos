@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="es">
   <head>
     <!-- Required meta tags -->
     <meta charset="utf-8">
@@ -79,7 +79,9 @@
         @yield('content')
       </div>
     
-    <script src="{{ asset('js/app.js') }}" defer></script>
     @livewireScripts
+    <script src="{{ asset('js/app.js') }}" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+    <x-livewire-alert::scripts />
   </body>
 </html>
