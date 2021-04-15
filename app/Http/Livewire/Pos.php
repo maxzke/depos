@@ -11,8 +11,6 @@ use App\Models\Metodo;
 use App\Models\Role;
 use App\Models\User;
 use App\Models\Venta;
-use App\Models\Lona;
-
 use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 use Illuminate\Support\Str;
@@ -49,38 +47,14 @@ class Pos extends Component{
 
     public $mensaje_pago;
     /**
-     * LONAS
-     */
-    public $id_lona=null;
-    public $tramos_lonas;
-    public $lonasearh;
-    public $id_tramos_lonas;
-    public $acabados_lonas;
-    public $id_acabados_lonas;
-    public $precio_calidad_lona;
-    public $inputAncho;
-    public $inputAlto;
-    public $area_1;
-    public $optimo_1;
-    public $area_2;
-    public $optimo_2;
-    /**
      * CLICK EN COBRAR SIN CLIENTE OR CART[]
      */
     public $campos_insuficientes = FALSE;
     public $venta_exitosa = FALSE;
 
-    public $tab="";
+    public $tab="personalizado";
 
     public function render(){
-        $data['lonas'] = Lona::get();
-        if(!empty($this->id_lona)) {
-            $this->lonasearh = Lona::find($this->id_lona);
-            $this->tramos_lonas = $this->lonasearh->tramos;
-            $this->acabados_lonas = $this->lonasearh->acabados;
-        }
-
-
         $this->importe = (floatval($this->cantidad))*(floatval($this->precio));
         /**
          * Prueba de relaciones
@@ -109,68 +83,6 @@ class Pos extends Component{
             ->paginate(6);
         return view('livewire.pos',$data);
     }
-
-    public function calcular_lona(){
-        $this->area_1 = $this->obtenerArea($this->inputAncho,$this->inputAlto,$this->tramos_lonas);
-        //$this->area_2 = $this->obtenerArea($this->inputAlto,$this->tramos_lonas);
-        // $this->area_2 = $this->tramos_lonas;
-    }
-
-    private function obtenerArea($ancho,$alto,$arrayTramos){
-        $tramo = 0;
-        $optimo1 = 0;
-        $area1 = 0;
-        foreach ($arrayTramos as $itemTramo) {
-            $tramo = floatval($itemTramo->medida);
-            // if (floatval($ancho) <= floatval($tramo)) {
-            if ( bccomp(floatval($ancho),$tramo)=== -1) {
-                $optimo1 = $tramo;
-            }
-        }
-        $area1 = (floatval($optimo1)) * (floatval($ancho));
-
-        $tramo = 0;
-        $optimo2 = 0;
-        $area2 = 0;
-        foreach ($arrayTramos as $itemTramo) {
-            $tramo = floatval($itemTramo->medida);
-            // if (floatval($alto) <= floatval($tramo)) {
-            if ( bccomp(floatval($alto),$tramo)=== -1) {
-                $optimo2 = $tramo;
-            }
-             
-        }
-        $area2 = (floatval($optimo2)) * (floatval($alto));
-
-        if (bccomp($area1,$area2)== -1) {
-            $msg = "1-a1=".$area1."a2=".$area2."optimo1=".$optimo1."optimo2=".$optimo2."ancho=".$ancho."alto=".$alto;
-        }else{
-            $msg = "2-a1=".$area1."a2=".$area2."optimo1=".$optimo1."optimo2=".$optimo2."alto=".$alto."ancho=".$ancho;
-        }
-
-        return $msg;
-        
-    }
-
-
-
-    // private function obtenerArea($lado,$arrayTramos){
-    //     $tramo = 0;
-    //     $optimo = 0;
-    //     $area = 0;
-    //     foreach ($arrayTramos as $itemTramo) {
-    //         $tramo = $itemTramo->medida;
-    //         if (floatval($lado) <= floatval($tramo)) {
-    //             $optimo = $tramo;
-    //         }
-    //     }
-    //     $area = (floatval($optimo)) * (floatval($lado));
-    //     $msg=array(
-    //         'area' => $area,
-    //         'tramo' => $optimo
-    //     );
-    //     return $msg;
-    // }
 
     public function addtocart(){
         $this->validate();
@@ -229,6 +141,7 @@ class Pos extends Component{
     public function set_cliente_buscado($id){
         $this->cliente_seleccionado = Cliente::find($id);   
         $this->id_cliente = $this->cliente_seleccionado->id;     
+        $this->showAlerta("success","Cliente Seleccionado!","bottom");
     }    
 
     public function add_cliente(){
@@ -288,6 +201,20 @@ class Pos extends Component{
             $this->tab = "pagar";
             $this->campos_insuficientes = TRUE;
             $this->venta_exitosa = FALSE;
+            /**
+             * Alertas
+             */
+            if ($this->abono == "") {
+                $this->showAlerta("error","Agregar Abono!","center-end");
+            }
+            if ($this->id_cliente ==null) {
+                $this->showAlerta("error","Seleccionar Cliente!","center-start");
+            }                        
+            if (count($this->cart)==0) {
+                $this->showAlerta("error","Agregar Productos!","bottom");
+            }
+            
+            
         }
                
     }
@@ -395,6 +322,19 @@ class Pos extends Component{
         'cliente_nombre.required' => 'Debes ingresar un nombre de cliente',
         'cliente_nombre.unique' => 'El nombre de cliente ya se encuentra registrado',
     ];
+
+    private function showAlerta($tipo,$mensaje,$position){
+        $this->alert($tipo, $mensaje, [
+            'position' =>  $position, 
+            'timer' =>  3000,  
+            'toast' =>  true, 
+            'text' =>  '', 
+            'confirmButtonText' =>  'Ok', 
+            'cancelButtonText' =>  'Cancel', 
+            'showCancelButton' =>  false, 
+            'showConfirmButton' =>  false, 
+      ]);
+    }
 
 
 

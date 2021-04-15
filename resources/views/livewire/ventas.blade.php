@@ -12,15 +12,15 @@
                 <span class="text-muted"><strong>Telefono</strong></span>
                 <br>
                 <span class="text-white">{{ $cliente ? $cliente->telefono : '' }}</span>            
-                <br>
-                <span class="text-muted"><strong>Correo</strong></span>
+                 <br>
+                {{--<span class="text-muted"><strong>Correo</strong></span>
                 <br>
                 <span class="text-white">{{ $cliente ? $cliente->correo : '' }}</span>
                 <br>
                 <span class="text-muted"><strong>Rfc</strong></span>
                 <br>
                 <span class="text-white">{{ $cliente ? $cliente->rfc : '' }}</span>
-                <br>
+                <br> --}}
                 <span class="text-muted"><strong>Razon Social</strong></span>
                 <br>
                 <span class="text-white">{{ $cliente ? $cliente->razon_social : '' }}</span>
@@ -53,7 +53,7 @@
                 <div class="col-md-8">
                   <div class="row">
                     <div class="col-md-12 text-center">
-                      <span>Seleccionar método de pago {{ $mensaje }} </span>
+                      <span>Seleccionar método de pago</span>
                     </div>
                   </div>  
                   <div class="row mt-1">
@@ -88,10 +88,15 @@
                       <div class="col-md-4"><span><strong>$ {{number_format($subtotal,1,".","," )}}</strong></span></div>
                       <div class="col-md-4">
                         <input type="number" 
-                        wire:model="importeAbono" 
-                        wire:keyup="abonar()"
-                        class="form-control form-control-sm" 
-                        onclick="this.select()"/>
+                          wire:model="importeAbono" 
+                          wire:keyup="abonar()"
+                          class="form-control form-control-sm" 
+                          onclick="this.select()"
+                          @if ($venta_seleccionada == null || $tab == 'historial')
+                              disabled
+                            @else
+
+                          @endif/>
                       </div>     
                       <div class="col-md-4 text-right"><strong>Iva</strong></div>
                       <div class="col-md-4"><span><strong>$ 1,3698</strong></span></div>
@@ -105,7 +110,7 @@
                       <div class="col-md-4 text-right"><strong>Total</strong></div>
                       <div class="col-md-4"><span><strong>$ 2,3698</strong></span></div>                            
                       <div class="col-md-4">
-                        <button class="btn btn-sm btn-outline-success btn-block mb-1" @if ($venta_seleccionada == null)
+                        <button class="btn btn-sm btn-outline-success btn-block mb-1" @if ($venta_seleccionada == null || $tab == 'historial')
                             disabled
                         @else
 
@@ -141,33 +146,32 @@
             </div>
         </div>
     </div>
-    <div class="row border-top pie">
+    <div class="row border-top">
         <div class="col-md-3 text-center">
             <span><i class="fas fa-history"></i> Historial Abonos</span>
-            <table class="table table-sm table-striped">
-                <tbody>                
-                    @if ($abonos != null)
-                        @foreach ($abonos as $abono)
-                            <tr>
-                                <td>$ {{$abono->importe}}</td>
-                                <td class="text-capitalize">{{$abono->metodo}}</td>
-                                <td>{{date('d/m/Y H:i:s', strtotime($abono->created_at))}}</td>
-                            </tr>
-                        @endforeach
-                    @endif
-                </tbody>
-            </table>
+            <div class="row pie">
+              <div class="col-md-12">
+                <table class="table table-sm table-striped">
+                  <tbody>                
+                      @if ($abonos != null)
+                          @foreach ($abonos as $abono)
+                              <tr>
+                                  <td>$ {{$abono->importe}}</td>
+                                  <td class="text-capitalize">{{$abono->metodo}}</td>
+                                  <td>{{date('d/m/Y H:i:s', strtotime($abono->created_at))}}</td>
+                              </tr>
+                          @endforeach
+                      @endif
+                  </tbody>
+              </table>
+              </div>
+            </div>
         </div>
         <div class="col-md-6 text-center offset-1">            
             <div id="myTabContent" class="tab-content">              
                 {{-- pendientes tab-pane --}}
-                <div class="tab-pane fade {{ $tab == 'pendientes' ? 'active show' : '' }}" id="tab-pendientes">  
-                  <div class="row">
-                    <div class="col-md-12 text-left">
-                      <span> Listado de Ventas <i class="fas fa-dollar-sign"></i> Pendientes</span> 
-                    </div>
-                  </div>
-                    <input type="text" class="form-control form-control-sm col-md-7 mt-1" placeholder="Buscar"
+                <div class="tab-pane fade {{ $tab == 'pendientes' ? 'active show' : '' }}" id="tab-pendientes">   
+                    <input type="text" class="form-control form-control-sm col-md-7 mt-1" placeholder="Buscar cliente"
                         wire:model="search_pendiente"
                         onclick="this.select()">                 
                     <table class="table table-sm table-hover table-responsive">
@@ -196,11 +200,6 @@
                 </div>              
                 {{-- historial tab-pane --}}
                 <div class="tab-pane fade {{ $tab == 'historial' ? 'active show' : '' }}" id="tab-historial">
-                  <div class="row">
-                    <div class="col-md-12 text-left">
-                      <span> <i class="fas fa-history"></i> Historial de Ventas Realizadas</span> 
-                    </div>
-                  </div>
                     <input type="text" class="form-control form-control-sm col-md-7 mt-1" placeholder="Buscar"
                         wire:model="search_historial"
                         onclick="this.select()"> 

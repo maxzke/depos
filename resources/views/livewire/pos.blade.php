@@ -16,14 +16,14 @@
                 <br>
                 <span class="text-white">{{ $seleccionado ? $seleccionado->telefono : '' }}</span>            
                 <br>
-                <span class="text-muted"><strong>Correo</strong></span>
+                {{-- <span class="text-muted"><strong>Correo</strong></span>
                 <br>
                 <span class="text-white">{{ $seleccionado ? $seleccionado->correo : '' }}</span>
                 <br>
                 <span class="text-muted"><strong>Rfc</strong></span>
                 <br>
-                <span class="text-white">{{ $seleccionado ? $seleccionado->rfc : '' }}</span>
-                <br>
+                <span class="text-white">{{ $seleccionado ? $seleccionado->rfc : '' }}</span> 
+                <br>--}}
                 <span class="text-muted"><strong>Razon Social</strong></span>
                 <br>
                 <span class="text-white">{{ $seleccionado ? $seleccionado->razon_social : '' }}</span>
@@ -39,12 +39,12 @@
                     href="#tab-search-cliente">
                     </i>
                   </div>
-                  <div class="col text-center">
+                  {{-- <div class="col text-center">
                     <i class="fas fa-pen incrementa" 
                     wire:click="$set('tab', 'edit_cliente')" 
                     data-toggle="tab" 
                     href="#tab-edit-cliente"></i>
-                  </div>
+                  </div> --}}
                   <div class="col text-left">
                     <i class="fas fa-user-plus incrementa"  
                     wire:click="$set('tab', 'add_cliente')" 
@@ -150,7 +150,7 @@
         <div class="col-md-2">
             <div class="categorias-productos mt-1">
                 <ul class="nav nav-tabs flex-column">
-                    <li class="nav-item">
+                    {{-- <li class="nav-item">
                       <a class="nav-link {{ $tab == 'lonas' ? 'active' : '' }}" wire:click="$set('tab', 'lonas')" data-toggle="tab" href="#tab-lona">Lonas</a>
                     </li>
                     <li class="nav-item">
@@ -161,7 +161,7 @@
                     </li>
                     <li class="nav-item">
                       <a class="nav-link {{ $tab == 'viniles' ? 'active' : '' }}" wire:click="$set('tab', 'viniles')" data-toggle="tab" href="#tab-viniles">Viniles</a>
-                    </li>
+                    </li> --}}
                     <li class="nav-item">
                       <a class="nav-link {{ $tab == 'personalizado' ? 'active' : '' }}" wire:click="$set('tab', 'personalizado')" data-toggle="tab" href="#tab-personalizado">Personalizado</a>
                     </li>
@@ -180,96 +180,41 @@
                             <div class=" row">
                                 <label for="tipoLona" class="col-sm-2">Lona</label> 
                                 <div class="col-sm-10">
-                                    <select wire:model="id_lona" id="tipoLona" class="form-control form-control-sm">
-                                      <option value='' selected> 
-                                        Seleccionar
-                                      </option>
-                                      @if ($lonas)
-                                        @foreach ($lonas as $lona)
-                                          <option value="{{ $lona->id }}">
-                                              {{ $lona->nombre }}
-                                          </option>
-                                        @endforeach
-                                      @endif
+                                    <select id="tipoLona" class="form-control form-control-sm">
+                                        <option value="2">
+                                            LONA FRONTLIT 10 ONZAS
+                                        </option>
+                                        <option value="3">
+                                            LONA FRONTLIT 13 ONZAS
+                                        </option>
+                                        <option value="4">
+                                            LONA MESH DE 18 ONZAS
+                                        </option>
                                     </select>
                                 </div>
                             </div> 
                             <div class=" row">
                                 <label for="acabadoLona" class="col-sm-2">Acabado</label> 
                                 <div class="col-sm-10">
-                                    <select wire:model="id_acabados_lonas" id="acabadoLona" class="form-control form-control-sm">
-                                      <option value='' selected> 
-                                        Seleccionar
-                                      </option>
-                                      @if ($acabados_lonas)
-                                        @foreach ($acabados_lonas as $acabado)
-                                          <option value="{{ $acabado->id }}">
-                                              {{ $acabado->nombre }}
-                                          </option>
-                                        @endforeach
-                                      @endif
+                                    <select id="acabadoLona" class="form-control form-control-sm">
                                     </select>
                                 </div>
                             </div>
                             <div class=" row">
-                              <label for="tramoLona" class="col-sm-2">TRAMOS</label> 
-                              <div class="col-sm-10">
-                                  <select id="tramoLona" class="form-control form-control-sm">
-                                    <option value='' selected> 
-                                      Seleccionar
-                                    </option>
-                                    @if ($tramos_lonas)
-                                      @foreach ($tramos_lonas as $tramo)
-                                        <option value="{{ $tramo->id }}">
-                                            {{ $tramo->medida }}
-                                        </option>
-                                      @endforeach
-                                    @endif
-                                  </select>
-                              </div>
-                          </div>
-                            <div class=" row">
                                 <label for="calidadLona" class="col-sm-2">Calidad</label> 
                                 <div class="col-sm-10">
-                                    <select wire:model="precio_calidad_lona" id="calidadLona" class="form-control form-control-sm text-capitalize">
-                                      <option value='' selected> 
-                                        Seleccionar
-                                      </option>
-                                      @if ($lonasearh)
-                                        <option value="{{ $lonasearh->calidad_360 }}">
-                                          Calidad 360 DPI - $ {{ $lonasearh->calidad_360 }}
-                                        </option>
-                                        <option value="{{ $lonasearh->calidad_360 }}">
-                                          Calidad 720 DPI - $ {{ $lonasearh->calidad_720 }}
-                                        </option>
-                                        <option value="{{ $lonasearh->calidad_360 }}">
-                                          Calidad 1024 DPI - $ {{ $lonasearh->calidad_1024 }}
-                                        </option>
-                                        <option value="{{ $lonasearh->calidad_360 }}">
-                                          Calidad FULLHD DPI - $ {{ $lonasearh->calidad_fullhd }}
-                                        </option>                                          
-                                      @endif                                      
+                                    <select id="calidadLona" class="form-control form-control-sm text-uppercase">
                                     </select>
                                 </div>
                             </div> 
                             <div class=" row">
                                 <label for="anchoLona" class="col-sm-2">Ancho</label> 
                                 <div class="col-sm-3">
-                                    <input type="number" 
-                                      step="1" id="anchoLona" 
-                                      placeholder="metros" 
-                                      class="form-control form-control-sm" 
-                                      onclick="this.select();"
-                                      wire:model="inputAncho">
+                                    <input type="text" step="1" id="anchoLona" placeholder="metros" class="form-control form-control-sm" onclick="this.select();">
                                 </div>
                                 <label for="altoLona" class="col-sm-2">Alto</label> 
                                 <div class="col-sm-3">
-                                    <input type="number" 
-                                    id="altoLona" 
-                                    placeholder="metros" 
-                                    class="form-control form-control-sm" 
-                                    onclick="this.select();"
-                                    wire:model="inputAlto">
+                                    <input type="text" id="altoLona" placeholder="metros" class="form-control form-control-sm" onclick="this.select();">
                                 </div>
                             </div> 
                             <div class=" row">
@@ -278,12 +223,9 @@
                                     <input type="number" min="1" id="cantidadLona" class="form-control form-control-sm" onclick="this.select();">
                                 </div>
                                 <div class="col-sm-3 offset-sm-2">
-                                    <button class="btn btn-sm btn-outline-warning btn-block" 
-                                    wire:click="calcular_lona()">Calcular</button>
+                                    <button class="btn btn-sm btn-outline-warning btn-block">Calcular</button>
                                 </div>
                             </div>
-                            <span>Area1: {{ $area_1 }} </span>
-                            <span>Area2: {{ $area_2 }} </span>
                       </div> 
                       <div class="col-md-4 mb-1">
                         <span class="text-muted"><strong>Precio</strong></span>
@@ -415,7 +357,7 @@
                         class="form-control form-control-sm mt-1 col-sm-3 @error('cliente_telefono') is-invalid @enderror" 
                         placeholder="Telefono (10 digitos)" 
                         wire:model="cliente_telefono"/>
-                        <input 
+                        {{-- <input 
                         type="email" 
                         class="form-control form-control-sm mt-1 col-sm-6 @error('cliente_correo') is-invalid @enderror" 
                         placeholder="Correo" 
@@ -424,11 +366,11 @@
                         type="text" 
                         class="form-control form-control-sm text-uppercase mt-1 col-sm-3 @error('cliente_rfc') is-invalid @enderror" 
                         placeholder="RFC" 
-                        wire:model="cliente_rfc"/>
+                        wire:model="cliente_rfc"/> --}}
                         <input 
                         type="text" 
                         class="form-control form-control-sm text-capitalize mt-1 col-sm-12 @error('cliente_razon_social') is-invalid @enderror" 
-                        placeholder="Razon social" 
+                        placeholder="Empresa" 
                         wire:model="cliente_razon_social"/>
                         @error('cliente_nombre') <div class="invalid-feedback">{{ $message }}</div> @enderror
                         <button type="button" 

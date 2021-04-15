@@ -3,7 +3,6 @@
 namespace App\Http\Livewire;
 
 use App\Models\Abono;
-use App\Models\Credito;
 use App\Models\Metodo;
 use App\Models\Venta;
 use Livewire\Component;
@@ -17,7 +16,6 @@ class Ventas extends Component{
     
     public $tab = "pendientes";
 
-    public $venta;
     public $detalles = null;
     public $abonos = null;
     public $search_pendiente;
@@ -28,9 +26,6 @@ class Ventas extends Component{
     public $cliente = null;
     public $facturar = false;
 
-<<<<<<< HEAD
-    public $mensaje;
-=======
     public $venta_seleccionada = null;
     //importe recibido
     public $importeAbono = null;
@@ -38,16 +33,14 @@ class Ventas extends Component{
     public $importe_pagado;
     public $credito = FALSE;
 
->>>>>>> ecef97807599f9151f544c54bc3e3a806ea61fb6
 
     public function render(){
-
         $data['ventas_historial'] = DB::table('ventas')
                         ->join('clientes','ventas.cliente_id','=','clientes.id')
                         ->select('ventas.*','clientes.nombre','clientes.id as id_cliente')
                         ->where('clientes.nombre','LIKE',"%{$this->search_historial}%")
                         ->orderBy('ventas.created_at', 'desc')
-                        ->paginate(6);
+                        ->paginate(5);
         // $data['creditos'] = DB::table('creditos')
         //                 ->leftJoin('ventas','ventas.id','=','creditos.venta_id')
         //                 ->join('clientes','ventas.cliente_id','=','clientes.id')
@@ -59,45 +52,14 @@ class Ventas extends Component{
                         ->select('ventas.*','creditos.importe','creditos.id as id_credito','clientes.nombre','clientes.id as id_cliente')
                         ->where('clientes.nombre','LIKE',"%{$this->search_pendiente}%")
                         ->orderBy('ventas.created_at', 'desc')
-                        ->paginate(6);
+                        ->paginate(5);
         $data['productos'] = $this->detalles;
         $data['abonos'] = $this->abonos;
         $data['metodos'] = Metodo::get();
         return view('livewire.ventas',$data);
     }
 
-    public function storeAbono(){
-        if (empty($this->venta)) {
-            $this->alerta('warning','Debe seleccionar un Cliente');
-        }else{
-            $this->mensaje = $this->venta->cliente->nombre;
-            $this->alerta('success','abono cargado');
-            
-        }
-    }
-
-    private function alerta($tipo,$mensaje){
-        $this->alert($tipo, $mensaje, [
-            'position' =>  'bottom', 
-            'timer' =>  3100,  
-            'toast' =>  true, 
-            'text' =>  '', 
-            'confirmButtonText' =>  'Ok', 
-            'cancelButtonText' =>  'Cancel', 
-            'showCancelButton' =>  false, 
-            'showConfirmButton' =>  false, 
-        ]);
-    }
-
     public function show($id){
-<<<<<<< HEAD
-        $this->venta = Venta::find($id);
-        $this->facturar = $this->venta->factura;
-        $this->detalles = $this->venta->detalles;
-        $this->cliente = $this->venta->cliente;
-        $this->abonos = $this->venta->abonos;
-        $this->saldo = $this->venta->creditos;
-=======
         $this->venta_seleccionada = $id;
         $venta = Venta::find($id);
         $this->facturar = $venta->factura;
@@ -105,7 +67,6 @@ class Ventas extends Component{
         $this->cliente = $venta->cliente;
         $this->abonos = $venta->abonos;
         $this->saldo = $venta->creditos;
->>>>>>> ecef97807599f9151f544c54bc3e3a806ea61fb6
         $this->subtotal = $this->getSubtotalVenta($this->detalles);
     }
 
@@ -115,6 +76,7 @@ class Ventas extends Component{
         $credit->update([
             'importe' => $importe
         ]);
+        $this->saldo->importe = $importe;
     }
 
     private function getSubtotalVenta($detalles){
@@ -126,24 +88,34 @@ class Ventas extends Component{
     }
 
     public function storeAbono(){
-        $creditoRestante = floatval($this->saldo->importe) - floatval($this->importe_pagado);
+        if ($this->importe_pagado > 0) {
+            $creditoRestante = floatval($this->saldo->importe) - floatval($this->importe_pagado);
 
-        $this->store_abono($this->venta_seleccionada,$this->metodo_pago,$this->importe_pagado); 
+            $this->store_abono($this->venta_seleccionada,$this->metodo_pago,$this->importe_pagado); 
 
-        $this->actualizaCredito($this->venta_seleccionada,$creditoRestante);
+            $this->actualizaCredito($this->venta_seleccionada,$creditoRestante);
 
-        $this->showAlerta("success","Abono Guardado!");
+            $this->showAlerta("success","Abono Guardado!","bottom");
+            
+            $this->importeAbono = null;
+            $this->venta_seleccionada = null;
+        }else{
+            $this->showAlerta("error","Introducir un Abono!","bottom");
+        }
+        
     }
 
     public function abonar(){
-        if ($this->venta_seleccionada == null && $this->saldo == 0) {
+        if ($this->venta_seleccionada == null || $this->saldo->importe == 0) {
             $this->showAlerta("error","Seleccionar una venta!");
+        }else{
+            //$this->tab = "pagar";
+            $respuesta = $this->verifica_abono($this->saldo->importe,$this->importeAbono);
+            $mensaje_pago = $respuesta['mensaje'];
+            $this->showAlerta("info",$mensaje_pago);
+            $this->setImportePago($respuesta['importe']);
         }
-        //$this->tab = "pagar";
-        $respuesta = $this->verifica_abono($this->saldo->importe,$this->importeAbono);
-        $mensaje_pago = $respuesta['mensaje'];
-        $this->showAlerta("info",$mensaje_pago);
-        $this->setImportePago($respuesta['importe']);
+        
     }
 
     private function setImportePago($importe){
