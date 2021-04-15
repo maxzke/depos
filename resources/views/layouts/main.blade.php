@@ -29,7 +29,7 @@
               <a class="nav-link" href="{{ url('ventas') }}">Ventas
               </a>
             </li>
-            <li class="nav-item">
+            {{-- <li class="nav-item">
               <a class="nav-link" href="#">Historial</a>
             </li>
             <li class="nav-item">
@@ -50,7 +50,7 @@
                 <div class="dropdown-divider"></div>
                 <a class="dropdown-item" href="#">Separated link</a>
               </div>
-            </li>
+            </li> --}}
           </ul>
           <ul class="navbar-nav ml-auto">
             <li class="nav-link text-capitalize">
