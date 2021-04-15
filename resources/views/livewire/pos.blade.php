@@ -124,20 +124,43 @@
                           wire:keyup="abonar()"
                           class="form-control form-control-sm" 
                           onclick="this.select()"
+                          min="0"
                           placeholder="$abono"/>
                         </div>     
                         <div class="col-md-4 text-right"><strong>Iva</strong></div>
-                        <div class="col-md-4"><span><strong>$ 1,3698</strong></span></div>
+                        <div class="col-md-4">
+                          <span>
+                            <strong>
+                              $ 
+                              @if ($facturar)
+                              {{number_format($iva,1,".","," )}}
+                              @else
+                              0
+                              @endif
+                            </strong>
+                          </span>
+                        </div>
                         <div class="col-md-4">
                           <div class="form-check">
                             <label class="form-check-label">
-                              <input wire:model="facturar" class="form-check-input" type="checkbox">
-                              factura
+                              <input wire:model="facturar" class="form-check-input" type="checkbox" 
+                                @if ($productos)
+                                  
+                                @else
+                                  disabled
+                                @endif>
+                              Facturar
                             </label>
                           </div>
                         </div>
                         <div class="col-md-4 text-right"><strong>Total</strong></div>
-                        <div class="col-md-4"><span><strong>$ 2,3698</strong></span></div>                            
+                        <div class="col-md-4">
+                          <span>
+                            <strong>$ 
+                              {{number_format($total,1,".","," )}}
+                            </strong>
+                          </span>
+                        </div>                            
                         <div class="col-md-4">
                           <button class="btn btn-sm btn-outline-success btn-block mb-1"
                           wire:click="store()">Cobrar</button>
@@ -163,7 +186,11 @@
                       <a class="nav-link {{ $tab == 'viniles' ? 'active' : '' }}" wire:click="$set('tab', 'viniles')" data-toggle="tab" href="#tab-viniles">Viniles</a>
                     </li> --}}
                     <li class="nav-item">
-                      <a class="nav-link {{ $tab == 'personalizado' ? 'active' : '' }}" wire:click="$set('tab', 'personalizado')" data-toggle="tab" href="#tab-personalizado">Personalizado</a>
+                      <a class="nav-link {{ $tab == 'personalizado' ? 'active' : '' }}" 
+                        wire:click="$set('tab', 'personalizado')" 
+                        data-toggle="tab" 
+                        href="#tab-personalizado"><i class="fas fa-cart-arrow-down fa-lg"></i> Producto
+                      </a>
                     </li>
                   </ul>
             </div>
@@ -265,7 +292,7 @@
                             Cantidad                               
                         </div> 
                         <div class="col-md-1">
-                            Precio                              
+                            Precio / Unit                           
                         </div> 
                         <div class="col-md-1">
                             Importe                              
@@ -316,7 +343,7 @@
                       <input type="text" 
                         class="form-control form-control-sm mt-1 @error('cliente_search') is-invalid @enderror" 
                         onclick="this.select()"
-                        placeholder="Buscar cliente... presione enter para buscar." 
+                        placeholder="Buscar cliente..." 
                         wire:model="cliente_search">
                         @error('cliente_search') <div class="invalid-feedback">{{ $message }}</div> @enderror
                       {{-- @if ($listado_clientes) --}}
@@ -346,17 +373,17 @@
                         type="text" 
                         class="form-control form-control-sm text-capitalize mt-1 @error('cliente_nombre') is-invalid @enderror" 
                         placeholder="Nombre completo" 
-                        wire:model="cliente_nombre"/>
+                        wire:model.lazy="cliente_nombre"/>
                         <input 
                         type="text" 
                         class="form-control form-control-sm text-capitalize mt-1 @error('cliente_direccion') is-invalid @enderror" 
                         placeholder="Dirección" 
-                        wire:model="cliente_direccion"/>
+                        wire:model.lazy="cliente_direccion"/>
                         <input 
                         type="number" 
                         class="form-control form-control-sm mt-1 col-sm-3 @error('cliente_telefono') is-invalid @enderror" 
                         placeholder="Telefono (10 digitos)" 
-                        wire:model="cliente_telefono"/>
+                        wire:model.lazy="cliente_telefono"/>
                         {{-- <input 
                         type="email" 
                         class="form-control form-control-sm mt-1 col-sm-6 @error('cliente_correo') is-invalid @enderror" 
@@ -371,7 +398,7 @@
                         type="text" 
                         class="form-control form-control-sm text-capitalize mt-1 col-sm-12 @error('cliente_razon_social') is-invalid @enderror" 
                         placeholder="Empresa" 
-                        wire:model="cliente_razon_social"/>
+                        wire:model.lazy="cliente_razon_social"/>
                         @error('cliente_nombre') <div class="invalid-feedback">{{ $message }}</div> @enderror
                         <button type="button" 
                           class="btn btn-sm btn-outline-info"
@@ -383,18 +410,14 @@
                 </div> 
                 <div class="tab-pane fade {{ $tab == 'pagar' ? 'active show' : '' }}" id="tab-pagar">
                   <div class="row">
-                    <div class="col-md-6 offset-3">
-                      <p> {{ $mensaje_pago }} </p>
+                    <div class="col-md-6 offset-3 text-center">
+                      @if ($abono != "")
+                        <h4><span class="badge badge-warning"> {{ $mensaje_pago }} </span></h4>
+                      @endif                      
                       @if ($campos_insuficientes)
                         <div class="alert alert-dismissible alert-danger">
                           <button type="button" class="close" data-dismiss="alert">&times;</button>
-                          <strong>Campos requeridos!</strong> completa la venta para poder proceder.
-                        </div>
-                      @endif
-                      @if ($venta_exitosa)
-                        <div class="alert alert-dismissible alert-success">
-                          <button type="button" class="close" data-dismiss="alert">&times;</button>
-                          Venta guardada exitosamente !
+                          <strong>Campos requeridos!</strong>
                         </div>
                       @endif
                     </div>

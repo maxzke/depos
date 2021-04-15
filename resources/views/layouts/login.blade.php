@@ -17,8 +17,9 @@
 body {
     height: 100%;
     margin: 0;
-    background-repeat: no-repeat;
-    background-attachment: fixed;
+    /* background-repeat: no-repeat;
+    background-attachment: fixed;*/
+    background-color: #343830; 
 }
 
 /* Text Align */
@@ -66,9 +67,9 @@ body {
 .form-button:active:hover,
 .form-button.active:hover,
 .form-button.active:focus {
-    background-color: rgba(41, 128, 33, 0.9);
-    border-color: rgba(255, 235, 59, 0.473);
-    color: #e6e6e6;
+    background-color: rgb(245, 241, 46);
+    border-color: rgba(0, 0, 0, 0.473);
+    color: #000000;
 }
 .button-l {
     width: 100% !important;
@@ -145,7 +146,7 @@ body {
 
 .form-control,
 .border-line {
-    background-color: #5f5f5f;
+    background-color: #f0f0f0;
     background-image: none;
     border: 1px solid #424242;
     border-radius: 1px;
@@ -157,34 +158,30 @@ body {
 }
 .form-control:focus,
 .border-line:focus {
-    border-color: #FFEB3B;
-    background-color: #616161;
-    color: #e6e6e6;
+    border-color: #000000;
+    background-color: #e6e6e6;
+    color: #000000;
 }
 .form-control,
 .form-control:focus {
     box-shadow: none;
 }
-.form-control::-webkit-input-placeholder { color: #e7e3e3; }
+.form-control::-webkit-input-placeholder { color: #3b3b3b; }
 
 /* Container */
 
 .container-content {
-    background-color: #3a3a3aa2;
+    background-color: #000000;
     color: inherit;
     padding: 15px 20px 20px 20px;
-    border-color: #FFEB3B;
-    border-image: none;
-    border-style: solid solid none;
-    border-width: 1px 0;
 }
 
 /* Backgrounds */
 
 .main-bg {
 
-    background: #424242;
-    background: linear-gradient( #424242, #212121);
+    background: #ffffff;
+    /* background: linear-gradient( #424242, #212121); */
 }
 
 /* Login & Register Pages*/

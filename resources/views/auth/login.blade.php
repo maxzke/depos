@@ -16,8 +16,8 @@
             </div>
         @endif
     </div>
-        <h1 class="text-whitesmoke">Digital Estudio</h1>
-        <p class="text-whitesmoke">Iniciar Sesión</p>
+        <h1 class="text-white">Digital Estudio</h1>
+        <p class="text-white">Iniciar Sesión</p>
     <div class="container-content">
         <form method="POST" action="{{ route('login') }}" class="margin-t">
             @csrf

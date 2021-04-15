@@ -22,11 +22,11 @@
         <div class="collapse navbar-collapse" id="navbarColor02">
           <ul class="navbar-nav mr-auto">
             <li class="nav-item {{ $page =='terminal' ? 'active' : ''  }}">
-              <a class="nav-link" href="{{ url('terminal') }}">Terminal
+              <a class="nav-link" href="{{ url('terminal') }}"><i class="fas fa-shopping-cart"></i> POS
               </a>
             </li>
             <li class="nav-item {{ $page =='ventas' ? 'active' : ''  }}">
-              <a class="nav-link" href="{{ url('ventas') }}">Ventas
+              <a class="nav-link" href="{{ url('ventas') }}"><i class="fas fa-list-ul"></i> Ventas
               </a>
             </li>
             {{-- <li class="nav-item">

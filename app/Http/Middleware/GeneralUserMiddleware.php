@@ -16,11 +16,11 @@ class GeneralUserMiddleware
      */
     public function handle(Request $request, Closure $next)
     {
-        // if (auth()->check() && auth()->user()->role == 'general'){
-        //     return $next($request);  
-        //   }else{
-        //     return redirect('/');
-        // }
-        return $next($request);  
+        if (auth()->check() && auth()->user()->role == 'general'){
+            return $next($request);  
+          }else{
+            return redirect('/terminal');
+        }
+        //return $next($request);  
     }
 }

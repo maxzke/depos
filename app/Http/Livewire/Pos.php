@@ -11,6 +11,7 @@ use App\Models\Metodo;
 use App\Models\Role;
 use App\Models\User;
 use App\Models\Venta;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 use Illuminate\Support\Str;
@@ -40,9 +41,8 @@ class Pos extends Component{
     public $facturar = false;
     public $credito = FALSE;
     public $importe_credito=0;
-
     public $id_venta;
-    public $id_user = 1;
+    // public $id_user = 1;
     public $id_cliente = null;
 
     public $mensaje_pago;
@@ -50,12 +50,18 @@ class Pos extends Component{
      * CLICK EN COBRAR SIN CLIENTE OR CART[]
      */
     public $campos_insuficientes = FALSE;
-    public $venta_exitosa = FALSE;
 
     public $tab="personalizado";
 
     public function render(){
         $this->importe = (floatval($this->cantidad))*(floatval($this->precio));
+        
+        if ($this->facturar) {
+            $this->iva = ($this->subtotal)*(0.16);
+            $this->total = (($this->subtotal)*(0.16)) + $this->subtotal;
+        }else {
+            $this->total = $this->subtotal;
+        }
         /**
          * Prueba de relaciones
          */
@@ -85,6 +91,15 @@ class Pos extends Component{
     }
 
     public function addtocart(){
+        if ($this->precio == "") {
+            $this->showAlerta("warning","Precio de Producto","bottom");
+        }
+        if ($this->cantidad == "") {
+            $this->showAlerta("warning","Cantidad de Producto","bottom");
+        }
+        if ($this->nombre == "") {
+            $this->showAlerta("warning","Nombre de Producto","bottom");
+        }
         $this->validate();
         $this->idp = Str::random(9);
         $producto = array(
@@ -109,6 +124,7 @@ class Pos extends Component{
             }
             $this->subtotal += $this->cart[$key]['importe'];
         } 
+        $this->abono = "";
     }
     public function producto_decrement($id){
         $this->subtotal = 0;
@@ -128,7 +144,8 @@ class Pos extends Component{
             if (!empty($this->cart)) {
                 $this->subtotal += $this->cart[$key]['importe'];
             }   
-        }     
+        }   
+        $this->abono = "";  
     }
 
     // public function buscar_cliente(){
@@ -175,10 +192,14 @@ class Pos extends Component{
         /**
          * VALIDAR CAMPOS REQUERIDOS PARA PROCEDER A GUARDAR VENTA
          */
+        $user = Auth::user();
+        $id_user = $user->id;
         $this->tab = "pagar";
-        if ($this->id_user !=null && $this->id_cliente !=null && count($this->cart)!=0 && $this->abono != "") {
+        if ($id_user !=null && $this->id_cliente !=null && count($this->cart)!=0 && $this->abono != "") {
             DB::transaction(function () {
-                $this->id_venta = $this->store_venta($this->id_user,$this->id_cliente,$this->facturar);
+                $user = Auth::user();
+                $id_user = $user->id;
+                $this->id_venta = $this->store_venta($id_user,$this->id_cliente,$this->facturar);
                 $this->store_detalles($this->id_venta,$this->cart);
                 $this->store_abono($this->id_venta,$this->metodo_pago,$this->importe_pagado); 
                 if ($this->credito) {
@@ -188,7 +209,8 @@ class Pos extends Component{
                  * RESET VALORES
                  */
                 $this->campos_insuficientes = FALSE;                
-                $this->venta_exitosa = TRUE;
+                $this->showAlerta("success","Venta Guardada !","center");
+                $this->mensaje_pago = "";
                 $this->cliente_seleccionado = "";
                 $this->cart = [];
                 $this->abono = "";
@@ -200,7 +222,6 @@ class Pos extends Component{
         }else{
             $this->tab = "pagar";
             $this->campos_insuficientes = TRUE;
-            $this->venta_exitosa = FALSE;
             /**
              * Alertas
              */
@@ -211,7 +232,7 @@ class Pos extends Component{
                 $this->showAlerta("error","Seleccionar Cliente!","center-start");
             }                        
             if (count($this->cart)==0) {
-                $this->showAlerta("error","Agregar Productos!","bottom");
+                $this->showAlerta("error","Agregar Productos!","top-end");
             }
             
             
@@ -220,11 +241,13 @@ class Pos extends Component{
     }
 
     public function abonar(){
-        if ($this->id_user !=null && $this->id_cliente !=null && count($this->cart)!=0) {
+        $user = Auth::user();
+        $id_user = $user->id;
+        if ($id_user !=null && $this->id_cliente !=null && count($this->cart)!=0) {
             $this->campos_insuficientes = FALSE;
         }
         $this->tab = "pagar";
-        $respuesta = $this->verifica_abono($this->subtotal,$this->abono);
+        $respuesta = $this->verifica_abono($this->total,$this->abono);
         $this->mensaje_pago = $respuesta['mensaje'];
         $this->setImportePago($respuesta['importe']);
     }

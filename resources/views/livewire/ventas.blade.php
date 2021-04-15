@@ -99,7 +99,12 @@
                           @endif/>
                       </div>     
                       <div class="col-md-4 text-right"><strong>Iva</strong></div>
-                      <div class="col-md-4"><span><strong>$ 1,3698</strong></span></div>
+                      <div class="col-md-4"><span><strong>$ 
+                        @if ($facturar)
+                          {{number_format(($subtotal)*(0.16),1,".","," )}}
+                        @else
+                          0
+                        @endif</strong></span></div>
                       <div class="col-md-4">
                           @if ($facturar)
                             Factura <i class="fas fa-check text-success"></i>
@@ -108,7 +113,12 @@
                           @endif
                       </div>
                       <div class="col-md-4 text-right"><strong>Total</strong></div>
-                      <div class="col-md-4"><span><strong>$ 2,3698</strong></span></div>                            
+                      <div class="col-md-4"><span><strong>$ 
+                        @if ($facturar)
+                          {{number_format((($subtotal)*(0.16))+$subtotal,1,".","," )}}
+                        @else
+                          0
+                        @endif</strong></span></div>                            
                       <div class="col-md-4">
                         <button class="btn btn-sm btn-outline-success btn-block mb-1" @if ($venta_seleccionada == null || $tab == 'historial')
                             disabled
@@ -147,7 +157,7 @@
         </div>
     </div>
     <div class="row border-top">
-        <div class="col-md-3 text-center">
+        <div class="col-md-4 text-center">
             <span><i class="fas fa-history"></i> Historial Abonos</span>
             <div class="row pie">
               <div class="col-md-12">
@@ -167,14 +177,15 @@
               </div>
             </div>
         </div>
-        <div class="col-md-6 text-center offset-1">            
+        <div class="col-md-5">            
             <div id="myTabContent" class="tab-content">              
                 {{-- pendientes tab-pane --}}
-                <div class="tab-pane fade {{ $tab == 'pendientes' ? 'active show' : '' }}" id="tab-pendientes">   
-                    <input type="text" class="form-control form-control-sm col-md-7 mt-1" placeholder="Buscar cliente"
+                <div class="tab-pane fade {{ $tab == 'pendientes' ? 'active show' : '' }}" id="tab-pendientes">  
+                  <span>Historial Pendientes <i class="fas fa-dollar-sign"></i></span> 
+                    <input type="text" class="form-control form-control-sm col-md-7 mt-1" placeholder="Buscar por cliente"
                         wire:model="search_pendiente"
                         onclick="this.select()">                 
-                    <table class="table table-sm table-hover table-responsive">
+                    <table class="table table-sm table-hover table-responsive text-center">
                         <thead>
                           <tr>
                             <th>Folio</th>
@@ -200,7 +211,8 @@
                 </div>              
                 {{-- historial tab-pane --}}
                 <div class="tab-pane fade {{ $tab == 'historial' ? 'active show' : '' }}" id="tab-historial">
-                    <input type="text" class="form-control form-control-sm col-md-7 mt-1" placeholder="Buscar"
+                  <span><i class="fas fa-history"></i> Historial ventas</span> 
+                    <input type="text" class="form-control form-control-sm col-md-7 mt-1" placeholder="Buscar por cliente"
                         wire:model="search_historial"
                         onclick="this.select()"> 
                     <table class="table table-sm table-hover table-responsive">
